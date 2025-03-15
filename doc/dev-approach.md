@@ -153,3 +153,24 @@ For reasons of convenience, I have placed the [mb-dotnet-winapp.sln file](../src
     Be sure not to miss the new include aka using directive in the first line of the file, referencing the namespace of the library!  
 
 5. Just to be sure, that everythink works as expected try again running the app by `dotnet run`. If all went well, there should open a window including the textbox. When double-clicking the textbox, the content should change to the name and costs of a resource.  
+
+### Creating the user interface
+
+Well, here I strongly advise you to use a WinForms editor! It is possible to edit things manually like you have seen in the last section (the _testTextBox_) but it is really pain in the ***.  
+
+I will later dive into detail for creating WinForms user interfaces in a separate section or documentation.  
+Just this much for now: it is good to know that a form always consists of two files that together form a class (the pattern behind it is called [_partial class_](https://learn.microsoft.com/en-us/dotnet/csharp/programming-guide/classes-and-structs/partial-classes-and-methods)). It is a convention to separate frontend and logic. If you enjoy editing everything by hand, the contents of both files could also be in one file.  
+In addition, I use resource files to store some properties that are used in the forms.  
+
+We now assume that the user interface has been created in the form of the following files and added to the project:   
+
+- FormMain.cs
+    - FormMain.Designer.cs
+    - FormMain.resx
+- FormAddResource.cs
+    - FormAddResource.Designer.cs
+    - FormAddResource.resx
+
+To make the application use the newly created user interface, I changed the called startup form in the [Program.cs](../src/Program.cs) in Line #14 from `Application.Run(new Form1());` to `Application.Run(new FormMain());`.  
+
+The _Form1.cs_ and _Form1.designer.cs_ no longer serve any purpose, but I'll just leave them as they are.  
