@@ -1,4 +1,4 @@
-# Money Burned: [your-repo-name]
+# Money Burned: mb-dotnet-winapp
 
 This repository is one of several reference implementations of the application "Money Burned" to illustrate the use of a particular development technology/platform. To learn more about it, check out the [organization profile](https://github.com/Money-Burned).  
 
@@ -6,13 +6,13 @@ This repository is one of several reference implementations of the application "
 
 ## Quick facts
 
-- Application type: **[Desktop-/Web-/Mobile-App]**
-- Available for: **[OS-and-Runtime-Environments-and-Version]**
-- Framework/Technology used: **[Dev-Framework]**
-- Programming Language used: **[Dev-Language]**
-- User interaction: **[GUI/CLI/VR/other]** 
+- Application type: **Desktop-App**
+- Available for: **Windows**
+- Framework/Technology used: **[.NET 9.0](https://dotnet.microsoft.com/en-us/download/dotnet/9.0)** (pronounced "Dotnet")
+- Programming Language used: **C#**
+- User interaction: **GUI** 
 
-> Degree of difficulty: **[piece of cake 🍰 / moderate ✌ / ambitious 🧬 / l33t h4x0r 🐱‍👤]**
+> Degree of difficulty: **moderate ✌**
 
 ## Getting started
 

@@ -1,4 +1,4 @@
-# Development approach of [your-repo-name]
+# Development approach of mb-dotnet-winapp
 
 ## Framework or development platform used
 
@@ -73,15 +73,11 @@
 
 ## Tutorial
 
-Please write a guide on what steps a developer who is completely new to this framework/platform needs to do to build this or a similar application themselves.
+### Creating a new WinForms Dotnet application
 
----
+Because of the idea of making this an implementation variant for the "Money Burned" examples, I'm going to stick with the [default repository template hosted on GitHub](https://github.com/Money-Burned/.template-project). It's a little bit of an overkill in terms of folder structure, but that's not a big deal - if you're just doing this to reproduce the basic creation of the application, you're fine to skip this part...  
+After creating the repository in GitHub and cloning it locally, we start in the root folder of our project - in this case, it's _mb-dotnet-winapp_.  
 
-> [!IMPORTANT]
-> PLEASE REMOVE THAT HORIZONAL RULER ABOVE AND EVERYTHING FOLLOWED WHEN DONE!
-
-## Some words about this file
-
-In this document you can explain everything about your journey to create this software. Whatever it takes - just make sure that an interested reader is able to understand what you've done so far and how.  
-
-It would be appreciated if you could at least briefly explain the above points. If you would like to write more and really go into depth, you are welcome to create additional separate files in the [doc directory](./) that deal with specific points in detail.  
+1. First of all we need to overwrite the gitignore placeholder file so all the binary artifacts from build and debugging are not tracked - we can use the Dotnet template by using the Dotnet CLI: `dotnet new gitignore --force`. The parameter _force_ will have you overwrite the existing template.  
+2. After I have the local repo ready for the application code, I just need to push the initial Dotnet template code of a WinForms application into this source folder using the Dotnet CLI with a separate name and output target: `dotnet new winforms -o .\src\ -n mb-dotnet-winapp`.  
+3. Let's try! Change to the source folder by typing `cd .\src\` and firing up the created WinForms template with `dotnet run`. If all went well, there should open a new blank window named _"Form 1"_ in the title.  
