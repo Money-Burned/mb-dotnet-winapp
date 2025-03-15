@@ -1,4 +1,4 @@
-namespace mb_dotnet_winapp;
+namespace MoneyBurned.Dotnet.Gui;
 
 static class Program
 {

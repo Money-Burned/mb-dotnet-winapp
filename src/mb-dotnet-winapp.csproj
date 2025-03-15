@@ -1,9 +1,14 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
+  <ItemGroup>
+    <ProjectReference Include="..\..\mb-dotnet-lib\src\mb-dotnet-lib.csproj" />
+  </ItemGroup>
+
   <PropertyGroup>
     <OutputType>WinExe</OutputType>
+    <AssemblyName>MoneyBurned.Gui</AssemblyName>
     <TargetFramework>net9.0-windows</TargetFramework>
-    <RootNamespace>mb_dotnet_winapp</RootNamespace>
+    <RootNamespace>MoneyBurned.Dotnet.Gui</RootNamespace>
     <Nullable>enable</Nullable>
     <UseWindowsForms>true</UseWindowsForms>
     <ImplicitUsings>enable</ImplicitUsings>

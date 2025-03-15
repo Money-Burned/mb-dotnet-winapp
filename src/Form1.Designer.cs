@@ -1,4 +1,5 @@
-﻿namespace mb_dotnet_winapp;
+﻿
+namespace MoneyBurned.Dotnet.Gui;
 
 partial class Form1
 {
@@ -28,11 +29,24 @@ partial class Form1
     /// </summary>
     private void InitializeComponent()
     {
+        textBoxTest = new TextBox();
+        // 
+        // textBoxTest
+        // 
+        textBoxTest.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
+        textBoxTest.Font = new Font("Segoe UI", 10F, FontStyle.Bold, GraphicsUnit.Point);
+        textBoxTest.Location = new Point(20, 50);
+        textBoxTest.Text = "Double-Click me to create a resource!";
+        textBoxTest.DoubleClick += new System.EventHandler(this.textBoxTest_DoubleClick);
+
+        this.Controls.Add(textBoxTest);
         this.components = new System.ComponentModel.Container();
         this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
         this.ClientSize = new System.Drawing.Size(800, 450);
         this.Text = "Form1";
     }
+
+    private TextBox textBoxTest;
 
     #endregion
 }
