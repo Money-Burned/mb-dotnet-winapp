@@ -2,14 +2,13 @@ namespace MoneyBurned.Dotnet.Gui
 {
     public partial class FormMain : Form
     {
-        private Font mbBaseFont;
+        private Font mbBaseFont = new Font("Segoe UI Black", 26F, FontStyle.Bold, GraphicsUnit.Point);
         private Font mbBigFont = new Font("Segoe UI Black", 42F, FontStyle.Bold, GraphicsUnit.Point);
 
 
         public FormMain()
         {
             InitializeComponent();
-            mbBaseFont = labelJobMoneyBurned.Font;
             buttonAdd.Focus();
         }
 
@@ -77,17 +76,8 @@ namespace MoneyBurned.Dotnet.Gui
 
         private void labelJobMoneyBurned_SizeChanged(object sender, EventArgs e)
         {
-            SuspendLayout();
-            if (((Label)sender).Width > 350)
-            {
-                labelJobMoneyBurned.Font = mbBigFont;
-            }
-            else
-            {
-                labelJobMoneyBurned.Font = mbBaseFont;
-            }
-            labelJobMoneyBurned.Refresh();
-            ResumeLayout();
+            // Select font style based on UI size
+            labelJobMoneyBurned.Font = ((Label)sender).Width > Convert.ToInt32(this.Width / 2) ? mbBigFont : mbBaseFont;
         }
     }
 }
