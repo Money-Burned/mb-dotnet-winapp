@@ -340,6 +340,7 @@
             listViewResources.TabIndex = 15;
             listViewResources.UseCompatibleStateImageBehavior = false;
             listViewResources.View = View.Details;
+            listViewResources.ItemSelectionChanged += listViewResources_itemSelectionChanged;
             // 
             // columnHeaderName
             // 
