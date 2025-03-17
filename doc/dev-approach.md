@@ -184,3 +184,7 @@ In addition, I use resource files to store some properties that are used in the 
 Then add all the form files to the project. To make the application use the newly created and added user interface, you will need to change the called startup form in the [Program.cs](https://github.com/Money-Burned/mb-dotnet-winapp/blob/19ede9f783e57483832df73eebd47ed707993bc0/src/Program.cs) in Line #14 from `Application.Run(new Form1());` to `Application.Run(new FormMain());`.  
 
 The _Form1.cs_ and _Form1.designer.cs_ no longer serve any purpose, but I'll just leave them as they are.  
+
+### Creating the logic and wiring with the user interface
+
+So now it's time to put things together!  
