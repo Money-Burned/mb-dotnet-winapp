@@ -20,6 +20,12 @@ namespace MoneyBurned.Dotnet.Gui
 
         #region UI Logic Handler
 
+        /// <summary>
+        /// The start button: this is where most of the magic happens: the recording job is put together. We do 
+        /// this here as all the resources used are required first. Then the timer is set up and launched.
+        /// </summary>
+        /// <param name="sender">Not relevant here</param>
+        /// <param name="e">Not relevant here</param>
         private void buttonJobStart_Click(object sender, EventArgs e)
         {
             Resource[]? resources = new Resource[listViewResources.Items.Count];
@@ -38,16 +44,27 @@ namespace MoneyBurned.Dotnet.Gui
             buttonJobStart.Enabled = false;
 
             currentJobTimer = new System.Windows.Forms.Timer();
-            currentJobTimer.Interval = 1000;
+            currentJobTimer.Interval = 500;
             currentJobTimer.Tick += currentJobTimer_Tick;
             currentJobTimer.Start();
         }
 
+        /// <summary>
+        /// The only purpos of this event handler is to redraw the UI as long as the stop watch is running.
+        /// </summary>
+        /// <param name="sender">Not relevant here</param>
+        /// <param name="e">Not relevant here</param>
         private void currentJobTimer_Tick(object? sender, EventArgs e)
         {
             DrawJobUi();
         }
 
+        /// <summary>
+        /// The stop button: when done with the current money recording job, the stop watch needs to be 
+        /// stopped. Then the timer is disposed and the user interface is brought backt to the state it was before.
+        /// </summary>
+        /// <param name="sender">Not relevant here</param>
+        /// <param name="e">Not relevant here</param>
         private void buttonJobStop_Click(object sender, EventArgs e)
         {
             currentJobTimer?.Stop();
@@ -59,6 +76,11 @@ namespace MoneyBurned.Dotnet.Gui
             buttonJobStart.Enabled = true;
         }
 
+        /// <summary>
+        /// Resource management: Open the dialog for adding a new resource
+        /// </summary>
+        /// <param name="sender">Not relevant here</param>
+        /// <param name="e">Not relevant here</param>
         private void buttonAdd_Click(object sender, EventArgs e)
         {
             FormAddResource addResourceForm = new FormAddResource();
@@ -66,6 +88,11 @@ namespace MoneyBurned.Dotnet.Gui
             addResourceForm.ShowDialog();
         }
 
+        /// <summary>
+        /// Resource management: Adding the new resource, if it was created in the dialog that is to be closed
+        /// </summary>
+        /// <param name="sender">Needed to recover the created resource from the closing form</param>
+        /// <param name="e">Not relevant here</param>
         private void addResourceForm_FormClosing(object? sender, FormClosingEventArgs e)
         {
             FormAddResource? addResourceForm = sender as FormAddResource;
@@ -74,15 +101,24 @@ namespace MoneyBurned.Dotnet.Gui
             buttonJobStart.Enabled = listViewResources.Items.Count > 0;
         }
 
+        /// <summary>
+        /// Resource management: Duplicate the selected resource
+        /// </summary>
+        /// <param name="sender">Not relevant here</param>
+        /// <param name="e">Not relevant here</param>
         private void buttonDuplicate_Click(object sender, EventArgs e)
         {
             if(listViewResources.SelectedItems.Count == 1)
             {
                 AddResource((Resource?)listViewResources.SelectedItems[0].Tag);
             }
-
         }
 
+        /// <summary>
+        /// Resource management: Remove the selected resources
+        /// </summary>
+        /// <param name="sender">Not relevant here</param>
+        /// <param name="e">Not relevant here</param>
         private void buttonRemove_Click(object sender, EventArgs e)
         {
             if(listViewResources.SelectedItems.Count > 0)
@@ -91,25 +127,6 @@ namespace MoneyBurned.Dotnet.Gui
                 {
                     listViewResources.Items.Remove(item);
                 }
-            }
-        }
-
-        private void listViewResources_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            if(listViewResources.SelectedItems.Count == 1) 
-            {
-                buttonDuplicate.Enabled = true;
-                buttonRemove.Enabled = true;
-            }
-            else if(listViewResources.SelectedItems.Count > 0)
-            {
-                buttonDuplicate.Enabled = false;
-                buttonRemove.Enabled = true;
-            }
-            else
-            {
-                buttonDuplicate.Enabled = false;
-                buttonRemove.Enabled = false;
             }
         }
 
@@ -161,6 +178,25 @@ namespace MoneyBurned.Dotnet.Gui
                 resourceItem.Tag = resource;
                 resourceItem.SubItems.Add($"{resource.CostPerWorkHour:C2} /h");
                 listViewResources.Items.Add(resourceItem);
+            }
+        }
+
+        private void listViewResources_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if(listViewResources.SelectedItems.Count == 1) 
+            {
+                buttonDuplicate.Enabled = true;
+                buttonRemove.Enabled = true;
+            }
+            else if(listViewResources.SelectedItems.Count > 0)
+            {
+                buttonDuplicate.Enabled = false;
+                buttonRemove.Enabled = true;
+            }
+            else
+            {
+                buttonDuplicate.Enabled = false;
+                buttonRemove.Enabled = false;
             }
         }
 

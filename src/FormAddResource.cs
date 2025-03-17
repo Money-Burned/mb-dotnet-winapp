@@ -1,5 +1,4 @@
 ﻿using MoneyBurned.Dotnet.Lib.Data;
-using System.ComponentModel;
 
 namespace MoneyBurned.Dotnet.Gui
 {
