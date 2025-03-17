@@ -340,19 +340,19 @@
             listViewResources.TabIndex = 15;
             listViewResources.UseCompatibleStateImageBehavior = false;
             listViewResources.View = View.Details;
-            listViewResources.ItemSelectionChanged += listViewResources_itemSelectionChanged;
+            listViewResources.SelectedIndexChanged += listViewResources_SelectedIndexChanged;
             // 
             // columnHeaderName
             // 
             columnHeaderName.Tag = "Name";
             columnHeaderName.Text = "Name";
-            columnHeaderName.Width = 150;
+            columnHeaderName.Width = 140;
             // 
             // columnHeaderCost
             // 
             columnHeaderCost.Text = "Cost/h";
             columnHeaderCost.TextAlign = HorizontalAlignment.Right;
-            columnHeaderCost.Width = 90;
+            columnHeaderCost.Width = 100;
             // 
             // openFileDialogJob
             // 
@@ -398,7 +398,6 @@
         private Button buttonJobStart;
         private ProgressBar progressBarJobRunning;
         private ToolStripDropDownButton toolStripDropDownFile;
-        private ToolStripMenuItem fileToolStripMenuItem;
         private ToolStripSeparator toolStripSeparator1;
         private ToolStripMenuItem openJobToolStripMenuItem;
         private ToolStripMenuItem saveJobToolStripMenuItem;

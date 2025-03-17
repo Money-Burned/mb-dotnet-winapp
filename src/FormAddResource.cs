@@ -5,23 +5,29 @@ namespace MoneyBurned.Dotnet.Gui
 {
     public partial class FormAddResource : Form
     {
-        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
-        public Resource NewResource { get; private set; }
-        private CostIntervalType[] costIntervalTypes = new CostIntervalType[] { CostIntervalType.WorkDay, CostIntervalType.WorkWeek, CostIntervalType.WorkMonth, CostIntervalType.WorkYear, CostIntervalType.Minute, CostIntervalType.Hour, CostIntervalType.Day, CostIntervalType.Week, CostIntervalType.Month, CostIntervalType.Year };
+        private readonly CostIntervalType[] costIntervalTypes = [CostIntervalType.WorkDay, CostIntervalType.WorkWeek, CostIntervalType.WorkMonth, CostIntervalType.WorkYear, CostIntervalType.Minute, CostIntervalType.Hour, CostIntervalType.Day, CostIntervalType.Week, CostIntervalType.Month, CostIntervalType.Year];
+        private readonly CostIntervalType costIntervalTypeDefault = CostIntervalType.Hour;
 
         public FormAddResource()
         {
             InitializeComponent();
-            comboBoxUnit.Items.Add(CostIntervalType.Hour);
-            comboBoxUnit.Items.Add(CostIntervalType.WorkDay);
-            comboBoxUnit.Items.Add(CostIntervalType.WorkYear);
+            foreach(CostIntervalType costType in costIntervalTypes)
+            {
+                comboBoxUnit.Items.Add(costType);
+            }
+            comboBoxUnit.SelectedItem = costIntervalTypeDefault;
         }
 
         private void buttonAdd_Click(object sender, EventArgs e)
         {
             try
             {
-                NewResource = new Resource(String.IsNullOrWhiteSpace(textBoxName.Text) ? "No name" : textBoxName.Text, new Cost(Convert.ToDecimal(textBoxCost.Text), (CostIntervalType)comboBoxUnit?.SelectedItem));
+                CostIntervalType selectedCostType = costIntervalTypeDefault;
+                if(comboBoxUnit.SelectedItem != null) 
+                {
+                    selectedCostType = (CostIntervalType)comboBoxUnit.SelectedItem;
+                }
+                Tag = new Resource(String.IsNullOrWhiteSpace(textBoxName.Text) ? "No name" : textBoxName.Text, new Cost(Convert.ToDecimal(textBoxCost.Text), selectedCostType));
                 Close();
             }
             catch (System.Exception ex)
