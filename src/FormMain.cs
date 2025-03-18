@@ -9,7 +9,7 @@ namespace MoneyBurned.Dotnet.Gui
         private Font mbBigFont = new Font("Segoe UI Black", 42F, FontStyle.Bold, GraphicsUnit.Point);
         
         private System.Windows.Forms.Timer? currentJobTimer;
-        private RecordingJob? currentJob;
+        private Job? currentJob;
 
 
         public FormMain()
@@ -37,7 +37,7 @@ namespace MoneyBurned.Dotnet.Gui
                     resources[i] = res;
                 }
             }
-            currentJob = new RecordingJob(resources);
+            currentJob = new Job(resources);
             currentJob.StartRecording();
             progressBarJobRunning.Style = ProgressBarStyle.Marquee;
             buttonJobStop.Enabled = true;
