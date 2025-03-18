@@ -1,5 +1,16 @@
 # Development approach of mb-dotnet-winapp
 
+Sorry folks, I'm not done yet - please stay tuned to catch up with the whole journey... `¯\_(ツ)_/¯`  
+
+But: some parts are filled in already:  
+
+1. [Requirements implemented](#requirements)
+2. [Tutorial](#tutorial)
+    - [Creating a new WinForms Dotnet application](#creating-a-new-winforms-dotnet-application)
+    - [Preparing the project](#preparation-of-the-created-winforms-project-for-further-development)
+    - [Creating the user interface](#creating-the-user-interface)
+    - [Implementing the logic](#creating-the-logic-and-wiring-with-the-user-interface)
+
 ## Framework or development platform used
 
 - Origin and some background on the chosen framework/platform
@@ -32,17 +43,17 @@
 
 | ReqID | Implemented? | Remarks (why not; challenges; how?) |
 | :--- | :---: | :--- | 
-| MF 01.1 | No | |
-| MF 01.2 | No | |
-| MF 02.1 | No | |
-| MF 02.2 | No | |
-| MF 03.1 | No | |
-| MF 03.2 | No | |
-| MF 03.3 | No | |
-| MF 03.4 | No | |
-| MB 01.1 | No | |
-| MB 01.2 | No | |
-| MB 02.1 | No | |
+| MF 01.1 | Yes | Separate dialog at runtime |
+| MF 01.2 | Yes | Part of resource creation |
+| MF 02.1 | Yes | Button below stopwatch |
+| MF 02.2 | Yes | Button below stopwatch |
+| MF 03.1 | Yes | |
+| MF 03.2 | Yes | |
+| MF 03.3 | Yes | |
+| MF 03.4 | Partially | Currently by a screenshot? |
+| MB 01.1 | Yes | Rate is 500ms |
+| MB 01.2 | Yes | |
+| MB 02.1 | Yes | |
 | OF 01.1 | No | |
 | OF 01.2 | No | |
 | OF 02.1 | No | |

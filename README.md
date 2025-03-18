@@ -2,13 +2,15 @@
 
 This repository is one of several reference implementations of the application "Money Burned" to illustrate the use of a particular development technology/platform. To learn more about it, check out the [organization profile](https://github.com/Money-Burned).  
 
-[A few words about what makes this implementation useful and relevant. If you feel like it, you can add a single, not too large screenshot (the height should not be more than a third of the visible text - the lower the better) to give an impression of how your implementation will look.]
+This [.NET](https://dotnet.microsoft.com/en-us/learn/dotnet/what-is-dotnet) (pronounced "Dotnet") based application shows how to implement the [requirements](https://github.com/Money-Burned/.github/blob/main/doc/requirements.md) with a simple graphical user interface for current Microsoft Windows operating systems using the native .NET [frontend framework WinForms](https://en.wikipedia.org/wiki/Windows_Forms).  
+
+![Two windows of the same Windows app at different stages of processing, calculated for four resources](./res/mb-dotnet-winapp.png)  
 
 ## Quick facts
 
 - Application type: **Desktop-App**
 - Available for: **Windows**
-- Framework/Technology used: **[.NET 9.0](https://dotnet.microsoft.com/en-us/download/dotnet/9.0)** (pronounced "Dotnet")
+- Framework/Technology used: **[.NET 9.0](https://dotnet.microsoft.com/en-us/download/dotnet/9.0)**
 - Programming Language used: **C#**
 - User interaction: **GUI** 
 
@@ -18,36 +20,43 @@ This repository is one of several reference implementations of the application "
 
 ### Prerequisites
 
-[REPLACE WITH: A bullet point list of things the user needs to accomplish, obtain, provide, download, install, buy, etc. in order to use your implementation of "Money Burned". It's a good idea to also add a short listing or shell snippet of how to fulfill these requirements in one go to make it easier to get started.]  
+- [Download](https://git-scm.com/downloads) and install a current version of Git
+- [Download](https://dotnet.microsoft.com/en-us/download) and Install .NET SDK (at least Version 9.0)
+- Create a development folder into which you clone the required repositories
+    - Clone the dependency project [repository "mb-dotnet-lib"](https://github.com/Money-Burned/mb-dotnet-lib)
+    - Clone this [repository](https://github.com/Money-Burned/mb-dotnet-winapp)
 
-### How to run
+If you are working under Windows, you can perform all of the above steps with the following [PowerShell](https://learn.microsoft.com/de-de/powershell/scripting/what-is-a-command-shell?view=powershell-7.5) commands to get started:  
 
-[REPLACE WITH: An enumeration of simple, reproducible steps for people with a moderate basic understanding of IT to get the application up and running. It's a good idea to also add a short listing or shell snippet of how to fulfill these requirements in one go to make it easier to get started.]  
+```powershell
+winget install Git.Git -e
+winget install Microsoft.DotNet.SDK.9 -e
+md ~\Money-Burned
+cd ~\Money-Burned
+git clone https://github.com/Money-Burned/mb-dotnet-lib.git
+git clone https://github.com/Money-Burned/mb-dotnet-winapp.git
+ls
+```
+
+_**HINT:** If you are confronted with an error message stating that `git` is not a recognized command, Git may never have been installed on your computer. You will then need to restart your terminal/console/shell and run the last three lines again._  
+
+### How to run the program
+
+Once you have met all the requirements, you are good to go:  
+
+```powershell
+cd ~\Money-Burned\mb-dotnet-winapp\src
+dotnet run
+```
 
 ### How to develop
 
-For information about the development process of this application please refer to the [development approach documentation](./doc/dev-approach.md).  
+For information about the development process of this application please refer to the [development approach documentation](./doc/dev-approach.md). Here you can find more details about the steps taken to develop the application up to this point.  
 
 ## Usage
 
-[REPLACE WITH: An explanation how your application is operated by a user and how configuration works. The first part depends largely on the type of user interaction chosen. Please be as specific as necessary and organize the information as needed (e. g. text, table, screenshots, subsections - whatever makes sense to you and your readers)!]  
+When the application starts, there are no resources defined. Please add some by using the _"Add" button_ at the right side. As soon as there are resources added, you can press the _"Start" button_ at the lower left side.  
 
 ## More things to know
 
-[REPLACE WITH: Further useful information about your project. These can be things such as justified deviations from the requirements and why you considered them necessary. In the case that these considerations are out of proportion to the README, please refer to additional reading in your [doc folder](./doc/). This section is optional - please remove, when there is no need for it!]  
-
----
-
-> [!IMPORTANT]
-> PLEASE REMOVE THAT HORIZONAL RULER ABOVE AND EVERYTHING FOLLOWED WHEN DONE!
-
-## Checklist for the repo maintainer and author
-
-Please ensure that you have tackled and completed all the tasks on the list by the time your implementation is published.  
-
-- [ ] Replace all placeholders (in square brackets, except those due to hyperlinks) in this file with meaningful information
-- [ ] Have a reference to the [organization profile of "Money Burned"](https://github.com/Money-Burned) (including hyperlink) integrated into the user interface of your application
-- [ ] Have the file [dev-approach.md](./doc/dev-approach.md) reviewed and completed
-- [ ] Make sure your project aligns with the minimal [suggested folder structure](https://github.com/Money-Burned/.github/blob/main/CONTRIBUTING.md#folder-structure) 
-- [ ] Have the file [LICENSE.md](./LICENSE.md) reviewed and modified by your needs but please keep it open source; reference to the license terms of the organization including a hyperlink is mandatory
-- [ ] Add a `CONTRIBUTING.md` in the root folder of your project, if you'd like to have other people involved with your project
+The application menu (_File_ and _Misc_) is not yet fully implemented - so don't be confused if the buttons don't work as expected. Later you should be able to open/save jobs and/or resource sets, make settings and display the "About" dialog box.  
