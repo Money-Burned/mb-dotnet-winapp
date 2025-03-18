@@ -15,7 +15,9 @@ namespace MoneyBurned.Dotnet.Gui
         public FormMain()
         {
             InitializeComponent();
+            currentJob = new Job("A new MB job...");
             DrawJobUi();
+            ActiveControl = buttonAdd;
         }
 
         #region UI Logic Handler
@@ -28,25 +30,29 @@ namespace MoneyBurned.Dotnet.Gui
         /// <param name="e">Not relevant here</param>
         private void buttonJobStart_Click(object sender, EventArgs e)
         {
-            Resource[]? resources = new Resource[listViewResources.Items.Count];
-            for(int i = 0; i < resources.Length; i++)
+            if(currentJob != null && currentJob.Resources.Count > 0)
             {
-                Resource? res = listViewResources?.Items?[i]?.Tag as Resource;
-                if(res != null)
+                if (currentJob.StartTime != DateTime.MinValue)
                 {
-                    resources[i] = res;
+                    Resource[] recentResources = [.. currentJob.Resources];
+                    currentJob = new Job("Another job...", recentResources);
                 }
-            }
-            currentJob = new Job(resources);
-            currentJob.StartRecording();
-            progressBarJobRunning.Style = ProgressBarStyle.Marquee;
-            buttonJobStop.Enabled = true;
-            buttonJobStart.Enabled = false;
 
-            currentJobTimer = new System.Windows.Forms.Timer();
-            currentJobTimer.Interval = 500;
-            currentJobTimer.Tick += currentJobTimer_Tick;
-            currentJobTimer.Start();
+                currentJob.StartRecording();
+                progressBarJobRunning.Style = ProgressBarStyle.Marquee;
+                buttonJobStop.Enabled = true;
+                buttonJobStart.Enabled = false;
+                buttonJobStop.Focus();
+
+                currentJobTimer = new System.Windows.Forms.Timer();
+                currentJobTimer.Interval = 500;
+                currentJobTimer.Tick += currentJobTimer_Tick;
+                currentJobTimer.Start();
+            }
+            else
+            {
+                MessageBox.Show("The job wasn't initialized or there are no resources defined!", "Wait! Job not ready...", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            }
         }
 
         /// <summary>
@@ -98,7 +104,6 @@ namespace MoneyBurned.Dotnet.Gui
             FormAddResource? addResourceForm = sender as FormAddResource;
             Resource? resource = addResourceForm?.Tag as Resource;
             AddResource(resource);
-            buttonJobStart.Enabled = listViewResources.Items.Count > 0;
         }
 
         /// <summary>
@@ -125,7 +130,7 @@ namespace MoneyBurned.Dotnet.Gui
             {
                 foreach(ListViewItem item in listViewResources.SelectedItems)
                 {
-                    listViewResources.Items.Remove(item);
+                    RemoveResource(item);
                 }
             }
         }
@@ -165,6 +170,7 @@ namespace MoneyBurned.Dotnet.Gui
 
         private void DrawJobUi()
         {
+            textBoxJobName.Text = currentJob != null ? currentJob.Name : "";
             labelJobDetails.Text = currentJob != null ? currentJob.ToString() : "";
             labelJobTimeElapsed.Text = currentJob != null ? $"{currentJob.ElapsedTime:hh\\:mm\\:ss}" : $"{TimeSpan.Zero:hh\\:mm\\:ss}";
             labelJobMoneyBurned.Text = currentJob != null ? $"{currentJob.ElapsedCost:C2}" : $"{Decimal.Zero:C2}";
@@ -178,7 +184,24 @@ namespace MoneyBurned.Dotnet.Gui
                 resourceItem.Tag = resource;
                 resourceItem.SubItems.Add($"{resource.CostPerWorkHour:C2} /h");
                 listViewResources.Items.Add(resourceItem);
+                currentJob?.AddResource(resource);
             }
+            buttonJobStart.Enabled = listViewResources.Items.Count > 0;
+            DrawJobUi();
+        }
+
+        private void RemoveResource(ListViewItem? listViewItem)
+        {
+            if (listViewItem != null)
+            {
+                listViewResources.Items.Remove(listViewItem);
+                if (listViewItem.Tag is Resource resource)
+                {
+                    currentJob?.RemoveResource(resource);
+                }
+            }
+            buttonJobStart.Enabled = listViewResources.Items.Count > 0;
+            DrawJobUi();
         }
 
         private void listViewResources_SelectedIndexChanged(object sender, EventArgs e)
