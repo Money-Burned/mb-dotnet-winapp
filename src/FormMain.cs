@@ -132,7 +132,7 @@ namespace MoneyBurned.Dotnet.Gui
 
         #endregion
 
-        #region UI Menue Handler
+        #region UI Menu Handler
 
         private void openJobToolStripMenuItem_Click(object sender, EventArgs e)
         {
