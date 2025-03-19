@@ -130,7 +130,8 @@ namespace MoneyBurned.Dotnet.Gui
             {
                 foreach(ListViewItem item in listViewResources.SelectedItems)
                 {
-                    RemoveResource(item);
+                    RemoveResource((Resource?)item.Tag);
+                    listViewResources.Items.Remove(item);
                 }
             }
         }
@@ -190,15 +191,11 @@ namespace MoneyBurned.Dotnet.Gui
             DrawJobUi();
         }
 
-        private void RemoveResource(ListViewItem? listViewItem)
+        private void RemoveResource(Resource? resource)
         {
-            if (listViewItem != null)
+            if (resource != null)
             {
-                listViewResources.Items.Remove(listViewItem);
-                if (listViewItem.Tag is Resource resource)
-                {
-                    currentJob?.RemoveResource(resource);
-                }
+                currentJob?.RemoveResource(resource);
             }
             buttonJobStart.Enabled = listViewResources.Items.Count > 0;
             DrawJobUi();
