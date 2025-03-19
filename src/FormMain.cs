@@ -183,7 +183,7 @@ namespace MoneyBurned.Dotnet.Gui
             {
                 ListViewItem resourceItem = new ListViewItem(resource.Name);
                 resourceItem.Tag = resource;
-                resourceItem.SubItems.Add($"{resource.CostPerWorkHour:C2} /h");
+                resourceItem.SubItems.Add($"{resource.CostPerWorkHour:C2}");
                 listViewResources.Items.Add(resourceItem);
                 currentJob?.AddResource(resource);
             }
