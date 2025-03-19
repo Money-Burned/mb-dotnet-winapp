@@ -2,7 +2,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.5.2.0
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MoneyBurned.Gui", "mb-dotnet-winapp.csproj", "{5C6F4BFF-59B0-A8D1-839E-E14FDFBA474F}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "mb-dotnet-winapp", "mb-dotnet-winapp.csproj", "{5C6F4BFF-59B0-A8D1-839E-E14FDFBA474F}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "mb-dotnet-lib", "..\..\mb-dotnet-lib\src\mb-dotnet-lib.csproj", "{D40206D0-5A84-478B-9D6E-0AE2EE2E4937}"
 EndProject
@@ -16,6 +16,10 @@ Global
 		{5C6F4BFF-59B0-A8D1-839E-E14FDFBA474F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5C6F4BFF-59B0-A8D1-839E-E14FDFBA474F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5C6F4BFF-59B0-A8D1-839E-E14FDFBA474F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D40206D0-5A84-478B-9D6E-0AE2EE2E4937}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D40206D0-5A84-478B-9D6E-0AE2EE2E4937}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D40206D0-5A84-478B-9D6E-0AE2EE2E4937}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D40206D0-5A84-478B-9D6E-0AE2EE2E4937}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
