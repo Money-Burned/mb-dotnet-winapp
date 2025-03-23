@@ -1,5 +1,6 @@
 using MoneyBurned.Dotnet.Lib;
 using MoneyBurned.Dotnet.Lib.Data;
+using System.Text.Json;
 
 namespace MoneyBurned.Dotnet.Gui
 {
@@ -7,6 +8,7 @@ namespace MoneyBurned.Dotnet.Gui
     {
         private readonly Font mbBaseFont = new Font("Segoe UI Black", 26F, FontStyle.Bold, GraphicsUnit.Point);
         private readonly Font mbBigFont = new Font("Segoe UI Black", 42F, FontStyle.Bold, GraphicsUnit.Point);
+        private readonly string defaultResourceFilePath = ".\\mb-resourcePool.json";
 
         private System.Windows.Forms.Timer? currentJobTimer;
         private Job? currentJob;
@@ -319,6 +321,67 @@ namespace MoneyBurned.Dotnet.Gui
         {
             // Select font style based on UI size
             labelJobMoneyBurned.Font = ((Label)sender).Width > Convert.ToInt32(this.Width / 2) ? mbBigFont : mbBaseFont;
+        }
+
+        #endregion
+
+
+        #region General Helper
+
+        private void LoadResourcePool(string filePath)
+        {
+            try
+            {
+                if (String.IsNullOrWhiteSpace(filePath))
+                {
+                    filePath = defaultResourceFilePath;
+                }
+                string resourcePoolItemsAsJson = File.ReadAllText(filePath);
+                List<Resource>? resourcePoolItems = JsonSerializer.Deserialize<List<Resource>>(resourcePoolItemsAsJson);
+                if (resourcePoolItems != null)
+                {
+                    foreach (Resource resource in resourcePoolItems)
+                    {
+                        ListViewItem resourceItem = new ListViewItem(resource.Name);
+                        resourceItem.Tag = resource;
+                        resourceItem.SubItems.Add($"{resource.CostPerWorkHour:C2}");
+                        listViewResources.Items.Add(resourceItem);
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Error loading resources", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private void SaveResourcePool(string filePath)
+        {
+            try
+            {
+                if (String.IsNullOrWhiteSpace(filePath))
+                {
+                    filePath = defaultResourceFilePath;
+                }
+
+                List<Resource> resourcePoolItems = [];
+                foreach (ListViewItem resourceItem in listViewResources.Items)
+                {
+                    Resource? resourceItemResource = (Resource?)resourceItem.Tag;
+                    if (resourceItemResource != null)
+                    {
+                        resourcePoolItems.Add(resourceItemResource);
+                    }
+                }
+                JsonSerializerOptions options = new JsonSerializerOptions { WriteIndented = true };
+                string resourcePoolItemsAsJson = JsonSerializer.Serialize(resourcePoolItems, options);
+                File.WriteAllText(filePath, resourcePoolItemsAsJson);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Error saving resources", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+
         }
 
         #endregion
