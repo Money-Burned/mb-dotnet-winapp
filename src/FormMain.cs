@@ -5,9 +5,9 @@ namespace MoneyBurned.Dotnet.Gui
 {
     public partial class FormMain : Form
     {
-        private Font mbBaseFont = new Font("Segoe UI Black", 26F, FontStyle.Bold, GraphicsUnit.Point);
-        private Font mbBigFont = new Font("Segoe UI Black", 42F, FontStyle.Bold, GraphicsUnit.Point);
-        
+        private readonly Font mbBaseFont = new Font("Segoe UI Black", 26F, FontStyle.Bold, GraphicsUnit.Point);
+        private readonly Font mbBigFont = new Font("Segoe UI Black", 42F, FontStyle.Bold, GraphicsUnit.Point);
+
         private System.Windows.Forms.Timer? currentJobTimer;
         private Job? currentJob;
 
@@ -30,7 +30,7 @@ namespace MoneyBurned.Dotnet.Gui
         /// <param name="e">Not relevant here</param>
         private void buttonJobStart_Click(object sender, EventArgs e)
         {
-            if(currentJob != null && currentJob.Resources.Count > 0)
+            if (currentJob != null && currentJob.Resources.Count > 0)
             {
                 if (currentJob.StartTime != DateTime.MinValue)
                 {
@@ -43,6 +43,7 @@ namespace MoneyBurned.Dotnet.Gui
                 buttonJobStop.Enabled = true;
                 buttonJobStart.Enabled = false;
                 buttonJobStop.Focus();
+                flowLayoutPanelJobResources.Enabled = false;
 
                 currentJobTimer = new System.Windows.Forms.Timer();
                 currentJobTimer.Interval = 500;
@@ -76,6 +77,7 @@ namespace MoneyBurned.Dotnet.Gui
             currentJobTimer?.Stop();
             currentJobTimer?.Dispose();
             currentJob?.EndRecording();
+            flowLayoutPanelJobResources.Enabled = true;
             DrawJobUi();
             progressBarJobRunning.Style = ProgressBarStyle.Blocks;
             buttonJobStop.Enabled = false;
@@ -103,19 +105,23 @@ namespace MoneyBurned.Dotnet.Gui
         {
             FormAddResource? addResourceForm = sender as FormAddResource;
             Resource? resource = addResourceForm?.Tag as Resource;
-            AddResource(resource);
+            AddResourceToPool(resource);
         }
 
         /// <summary>
-        /// Resource management: Duplicate the selected resource
+        /// Resource management: Edit the selected resource
         /// </summary>
         /// <param name="sender">Not relevant here</param>
         /// <param name="e">Not relevant here</param>
-        private void buttonDuplicate_Click(object sender, EventArgs e)
+        private void buttonEdit_Click(object sender, EventArgs e)
         {
-            if(listViewResources.SelectedItems.Count == 1)
+            if (listViewResources.SelectedItems.Count == 1)
             {
-                AddResource((Resource?)listViewResources.SelectedItems[0].Tag);
+                Resource? resource = (Resource?)listViewResources.SelectedItems[0].Tag;
+                RemoveResourceFromPool(resource);
+                FormAddResource addResourceForm = new FormAddResource(resource);
+                addResourceForm.FormClosing += addResourceForm_FormClosing;
+                addResourceForm.ShowDialog();
             }
         }
 
@@ -126,12 +132,28 @@ namespace MoneyBurned.Dotnet.Gui
         /// <param name="e">Not relevant here</param>
         private void buttonRemove_Click(object sender, EventArgs e)
         {
-            if(listViewResources.SelectedItems.Count > 0)
+            if (listViewResources.SelectedItems.Count > 0)
             {
-                foreach(ListViewItem item in listViewResources.SelectedItems)
+                foreach (ListViewItem item in listViewResources.SelectedItems)
                 {
-                    RemoveResource((Resource?)item.Tag);
-                    listViewResources.Items.Remove(item);
+                    RemoveResourceFromPool((Resource?)item.Tag);
+                }
+            }
+        }
+
+        /// <summary>
+        /// Resource management: Adds the selected resources to the current Job
+        /// </summary>
+        /// <param name="sender">Not relevant here</param>
+        /// <param name="e">Not relevant here</param>
+        private void buttonAddToJob_Click(object sender, EventArgs e)
+        {
+            if (listViewResources.SelectedItems.Count > 0)
+            {
+                foreach (ListViewItem item in listViewResources.SelectedItems)
+                {
+                    Resource? resource = (Resource?)item.Tag;
+                    AddResourceToJob(resource);
                 }
             }
         }
@@ -177,47 +199,108 @@ namespace MoneyBurned.Dotnet.Gui
             labelJobMoneyBurned.Text = currentJob != null ? $"{currentJob.ElapsedCost:C2}" : $"{Decimal.Zero:C2}";
         }
 
-        private void AddResource(Resource? resource)
+        private void AddResourceToJob(Resource? resource)
+        {
+            if (resource != null)
+            {
+                foreach (UserControlResourceInstance resourceControl in flowLayoutPanelJobResources.Controls)
+                {
+                    if (resourceControl.Resource?.Id == resource.Id)
+                    {
+                        if (resourceControl.Resource.IsGenericRole)
+                        {
+                            resourceControl.AddGenericResource();
+                        }
+                        else
+                        {
+                            MessageBox.Show($"The resource {resource.Name} is already assigned to the job. Please choose another!", "Resource exisiting!", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                        }
+                        return;
+                    }
+                }
+
+                UserControlResourceInstance resourceInstance = new UserControlResourceInstance(resource);
+                resourceInstance.OnResourceChanged += ResourceInstance_OnResourceChanged;
+                flowLayoutPanelJobResources.Controls.Add(resourceInstance);
+            }
+        }
+
+        private void AddResourceToPool(Resource? resource)
         {
             if (resource != null)
             {
                 ListViewItem resourceItem = new ListViewItem(resource.Name);
-                resourceItem.Tag = resource;
                 resourceItem.SubItems.Add($"{resource.CostPerWorkHour:C2}");
+                resourceItem.ImageIndex = (int)resource.Category;
+                resourceItem.Tag = resource;
                 listViewResources.Items.Add(resourceItem);
-                currentJob?.AddResource(resource);
             }
-            buttonJobStart.Enabled = listViewResources.Items.Count > 0;
-            DrawJobUi();
         }
 
-        private void RemoveResource(Resource? resource)
+        private void RemoveResourceFromPool(Resource? resource)
         {
             if (resource != null)
             {
-                currentJob?.RemoveResource(resource);
+                foreach (ListViewItem resourceItem in listViewResources.Items)
+                {
+                    Resource? resourceItemResource = (Resource?)resourceItem.Tag;
+                    if (resourceItemResource != null && resource.Id == resourceItemResource.Id)
+                    {
+                        resourceItem.Remove();
+                    }
+                }
             }
-            buttonJobStart.Enabled = listViewResources.Items.Count > 0;
-            DrawJobUi();
+        }
+
+        private void listViewResources_DoubleClick(object sender, EventArgs e)
+        {
+            if (listViewResources.SelectedItems.Count == 1)
+            {
+                AddResourceToJob((Resource?)listViewResources.SelectedItems[0].Tag);
+            }
         }
 
         private void listViewResources_SelectedIndexChanged(object sender, EventArgs e)
         {
-            if(listViewResources.SelectedItems.Count == 1) 
+            if (listViewResources.SelectedItems.Count == 1)
             {
-                buttonDuplicate.Enabled = true;
+                buttonEdit.Enabled = true;
                 buttonRemove.Enabled = true;
+                buttonAddToJob.Enabled = true;
             }
-            else if(listViewResources.SelectedItems.Count > 0)
+            else if (listViewResources.SelectedItems.Count > 0)
             {
-                buttonDuplicate.Enabled = false;
+                buttonEdit.Enabled = false;
                 buttonRemove.Enabled = true;
+                buttonAddToJob.Enabled = true;
             }
             else
             {
-                buttonDuplicate.Enabled = false;
+                buttonEdit.Enabled = false;
                 buttonRemove.Enabled = false;
+                buttonAddToJob.Enabled = false;
             }
+        }
+
+        private void flowLayoutPanelJobResources_ControlsChanged(object sender, ControlEventArgs e)
+        {
+            List<Resource> currentlyAssignedResources = [];
+            foreach (UserControlResourceInstance resourceControl in flowLayoutPanelJobResources.Controls)
+            {
+                if (resourceControl.Resource != null)
+                {
+                    currentlyAssignedResources.Add(resourceControl.Resource);
+                }
+            }
+            currentJob?.ClearResources();
+            currentJob?.AddResources(currentlyAssignedResources.ToArray());
+            buttonJobStart.Enabled = flowLayoutPanelJobResources.Controls.Count > 0;
+            DrawJobUi();
+        }
+
+        private void ResourceInstance_OnResourceChanged(object? sender, EventArgs e)
+        {
+            DrawJobUi();
         }
 
         private void buttonCollapse_Click(object sender, EventArgs e)

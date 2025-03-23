@@ -1,4 +1,5 @@
-﻿namespace MoneyBurned.Dotnet.Gui
+﻿
+namespace MoneyBurned.Dotnet.Gui
 {
     partial class FormMain
     {
@@ -28,6 +29,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormMain));
             toolStripMain = new ToolStrip();
             toolStripDropDownFile = new ToolStripDropDownButton();
@@ -41,22 +43,28 @@
             aboutToolStripMenuItem = new ToolStripMenuItem();
             statusStripMain = new StatusStrip();
             splitContainerMain = new SplitContainer();
+            buttonExpand = new Button();
             textBoxJobName = new TextBox();
             progressBarJobRunning = new ProgressBar();
             buttonJobStop = new Button();
             buttonJobStart = new Button();
-            buttonExpand = new Button();
-            buttonAdd = new Button();
-            buttonDuplicate = new Button();
-            buttonRemove = new Button();
-            buttonCollapse = new Button();
             labelJobDetails = new Label();
             labelJobTimeElapsed = new Label();
             labelJobMoneyBurned = new Label();
-            groupBoxResources = new GroupBox();
+            splitContainerResources = new SplitContainer();
+            groupBoxResourcePool = new GroupBox();
+            buttonAddToJob = new Button();
+            buttonEdit = new Button();
+            buttonRemove = new Button();
+            buttonAdd = new Button();
             listViewResources = new ListView();
             columnHeaderName = new ColumnHeader();
             columnHeaderCost = new ColumnHeader();
+            imageListResourcesLarge = new ImageList(components);
+            imageListResourcesSmall = new ImageList(components);
+            groupBoxJobResources = new GroupBox();
+            flowLayoutPanelJobResources = new FlowLayoutPanel();
+            buttonCollapse = new Button();
             openFileDialogJob = new OpenFileDialog();
             saveFileDialogJob = new SaveFileDialog();
             toolStripMain.SuspendLayout();
@@ -64,7 +72,12 @@
             splitContainerMain.Panel1.SuspendLayout();
             splitContainerMain.Panel2.SuspendLayout();
             splitContainerMain.SuspendLayout();
-            groupBoxResources.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)splitContainerResources).BeginInit();
+            splitContainerResources.Panel1.SuspendLayout();
+            splitContainerResources.Panel2.SuspendLayout();
+            splitContainerResources.SuspendLayout();
+            groupBoxResourcePool.SuspendLayout();
+            groupBoxJobResources.SuspendLayout();
             SuspendLayout();
             // 
             // toolStripMain
@@ -171,7 +184,7 @@
             // 
             // splitContainerMain.Panel2
             // 
-            splitContainerMain.Panel2.Controls.Add(groupBoxResources);
+            splitContainerMain.Panel2.Controls.Add(splitContainerResources);
             splitContainerMain.Size = new Size(624, 274);
             splitContainerMain.SplitterDistance = 240;
             splitContainerMain.TabIndex = 2;
@@ -193,7 +206,7 @@
             textBoxJobName.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
             textBoxJobName.BackColor = SystemColors.Control;
             textBoxJobName.BorderStyle = BorderStyle.None;
-            textBoxJobName.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point);
+            textBoxJobName.Font = new Font("Segoe UI", 12F, FontStyle.Bold);
             textBoxJobName.Location = new Point(12, 10);
             textBoxJobName.Name = "textBoxJobName";
             textBoxJobName.Size = new Size(212, 22);
@@ -236,11 +249,11 @@
             // labelJobDetails
             // 
             labelJobDetails.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
-            labelJobDetails.Font = new Font("Segoe UI", 9.5F, FontStyle.Regular, GraphicsUnit.Point);
+            labelJobDetails.Font = new Font("Segoe UI", 9.5F);
             labelJobDetails.ForeColor = SystemColors.InfoText;
             labelJobDetails.Location = new Point(12, 35);
             labelJobDetails.Name = "labelJobDetails";
-            labelJobDetails.Size = new Size(212, 49);
+            labelJobDetails.Size = new Size(212, 64);
             labelJobDetails.TabIndex = 8;
             labelJobDetails.Text = "<Details>";
             labelJobDetails.TextAlign = ContentAlignment.MiddleCenter;
@@ -248,7 +261,7 @@
             // labelJobTimeElapsed
             // 
             labelJobTimeElapsed.Anchor = AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
-            labelJobTimeElapsed.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point);
+            labelJobTimeElapsed.Font = new Font("Segoe UI", 12F);
             labelJobTimeElapsed.Location = new Point(12, 154);
             labelJobTimeElapsed.Name = "labelJobTimeElapsed";
             labelJobTimeElapsed.Size = new Size(212, 29);
@@ -260,58 +273,80 @@
             // 
             labelJobMoneyBurned.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
             labelJobMoneyBurned.AutoEllipsis = true;
-            labelJobMoneyBurned.Font = new Font("Segoe UI Black", 28F, FontStyle.Bold, GraphicsUnit.Point);
-            labelJobMoneyBurned.Location = new Point(12, 84);
+            labelJobMoneyBurned.Font = new Font("Segoe UI Black", 28F, FontStyle.Bold);
+            labelJobMoneyBurned.Location = new Point(12, 88);
             labelJobMoneyBurned.Name = "labelJobMoneyBurned";
-            labelJobMoneyBurned.Size = new Size(212, 70);
+            labelJobMoneyBurned.Size = new Size(218, 62);
             labelJobMoneyBurned.TabIndex = 10;
             labelJobMoneyBurned.Text = "$ 0.00";
             labelJobMoneyBurned.TextAlign = ContentAlignment.MiddleCenter;
             labelJobMoneyBurned.SizeChanged += labelJobMoneyBurned_SizeChanged;
             // 
-            // groupBoxResources
+            // splitContainerResources
             // 
-            groupBoxResources.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
-            groupBoxResources.Controls.Add(buttonCollapse);
-            groupBoxResources.Controls.Add(buttonDuplicate);
-            groupBoxResources.Controls.Add(buttonRemove);
-            groupBoxResources.Controls.Add(buttonAdd);
-            groupBoxResources.Controls.Add(listViewResources);
-            groupBoxResources.Location = new Point(3, 10);
-            groupBoxResources.Name = "groupBoxResources";
-            groupBoxResources.Size = new Size(365, 261);
-            groupBoxResources.TabIndex = 0;
-            groupBoxResources.TabStop = false;
-            groupBoxResources.Text = "Ressources";
+            splitContainerResources.Dock = DockStyle.Fill;
+            splitContainerResources.Location = new Point(0, 0);
+            splitContainerResources.Name = "splitContainerResources";
+            splitContainerResources.Orientation = Orientation.Horizontal;
             // 
-            // buttonCollapse
+            // splitContainerResources.Panel1
             // 
-            buttonCollapse.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
-            buttonCollapse.Location = new Point(344, 201);
-            buttonCollapse.Name = "buttonCollapse";
-            buttonCollapse.Size = new Size(15, 50);
-            buttonCollapse.TabIndex = 11;
-            buttonCollapse.Text = ">";
-            buttonCollapse.UseVisualStyleBackColor = true;
-            buttonCollapse.Click += buttonCollapse_Click;
+            splitContainerResources.Panel1.Controls.Add(groupBoxResourcePool);
+            splitContainerResources.Panel1MinSize = 140;
             // 
-            // buttonDuplicate
+            // splitContainerResources.Panel2
             // 
-            buttonDuplicate.Anchor = AnchorStyles.Top | AnchorStyles.Right;
-            buttonDuplicate.Enabled = false;
-            buttonDuplicate.Location = new Point(284, 51);
-            buttonDuplicate.Name = "buttonDuplicate";
-            buttonDuplicate.Size = new Size(75, 23);
-            buttonDuplicate.TabIndex = 13;
-            buttonDuplicate.Text = "Duplicate";
-            buttonDuplicate.UseVisualStyleBackColor = true;
-            buttonDuplicate.Click += buttonDuplicate_Click;
+            splitContainerResources.Panel2.Controls.Add(groupBoxJobResources);
+            splitContainerResources.Panel2.Controls.Add(buttonCollapse);
+            splitContainerResources.Panel2MinSize = 100;
+            splitContainerResources.Size = new Size(380, 274);
+            splitContainerResources.SplitterDistance = 140;
+            splitContainerResources.TabIndex = 1;
+            // 
+            // groupBoxResourcePool
+            // 
+            groupBoxResourcePool.Controls.Add(buttonAddToJob);
+            groupBoxResourcePool.Controls.Add(buttonEdit);
+            groupBoxResourcePool.Controls.Add(buttonRemove);
+            groupBoxResourcePool.Controls.Add(buttonAdd);
+            groupBoxResourcePool.Controls.Add(listViewResources);
+            groupBoxResourcePool.Dock = DockStyle.Fill;
+            groupBoxResourcePool.Location = new Point(0, 0);
+            groupBoxResourcePool.Name = "groupBoxResourcePool";
+            groupBoxResourcePool.Size = new Size(380, 140);
+            groupBoxResourcePool.TabIndex = 0;
+            groupBoxResourcePool.TabStop = false;
+            groupBoxResourcePool.Text = "Resource Pool";
+            // 
+            // buttonAddToJob
+            // 
+            buttonAddToJob.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+            buttonAddToJob.Enabled = false;
+            buttonAddToJob.Location = new Point(299, 107);
+            buttonAddToJob.Name = "buttonAddToJob";
+            buttonAddToJob.Size = new Size(75, 23);
+            buttonAddToJob.TabIndex = 16;
+            buttonAddToJob.Text = "Add to Job";
+            buttonAddToJob.UseVisualStyleBackColor = true;
+            buttonAddToJob.Click += buttonAddToJob_Click;
+            // 
+            // buttonEdit
+            // 
+            buttonEdit.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+            buttonEdit.Enabled = false;
+            buttonEdit.Location = new Point(299, 51);
+            buttonEdit.Name = "buttonEdit";
+            buttonEdit.Size = new Size(75, 23);
+            buttonEdit.TabIndex = 13;
+            buttonEdit.Text = "Edit";
+            buttonEdit.UseVisualStyleBackColor = true;
+            buttonEdit.Click += buttonEdit_Click;
             // 
             // buttonRemove
             // 
             buttonRemove.Anchor = AnchorStyles.Top | AnchorStyles.Right;
             buttonRemove.Enabled = false;
-            buttonRemove.Location = new Point(284, 80);
+            buttonRemove.Location = new Point(299, 80);
             buttonRemove.Name = "buttonRemove";
             buttonRemove.Size = new Size(75, 23);
             buttonRemove.TabIndex = 14;
@@ -322,11 +357,11 @@
             // buttonAdd
             // 
             buttonAdd.Anchor = AnchorStyles.Top | AnchorStyles.Right;
-            buttonAdd.Location = new Point(284, 22);
+            buttonAdd.Location = new Point(299, 22);
             buttonAdd.Name = "buttonAdd";
             buttonAdd.Size = new Size(75, 23);
             buttonAdd.TabIndex = 12;
-            buttonAdd.Text = "Add";
+            buttonAdd.Text = "New...";
             buttonAdd.UseVisualStyleBackColor = true;
             buttonAdd.Click += buttonAdd_Click;
             // 
@@ -334,13 +369,16 @@
             // 
             listViewResources.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
             listViewResources.Columns.AddRange(new ColumnHeader[] { columnHeaderName, columnHeaderCost });
+            listViewResources.LargeImageList = imageListResourcesLarge;
             listViewResources.Location = new Point(6, 22);
             listViewResources.Name = "listViewResources";
-            listViewResources.Size = new Size(272, 229);
+            listViewResources.Size = new Size(287, 108);
+            listViewResources.SmallImageList = imageListResourcesSmall;
             listViewResources.TabIndex = 15;
             listViewResources.UseCompatibleStateImageBehavior = false;
             listViewResources.View = View.Details;
             listViewResources.SelectedIndexChanged += listViewResources_SelectedIndexChanged;
+            listViewResources.DoubleClick += listViewResources_DoubleClick;
             // 
             // columnHeaderName
             // 
@@ -353,6 +391,61 @@
             columnHeaderCost.Text = "Cost/h";
             columnHeaderCost.TextAlign = HorizontalAlignment.Right;
             columnHeaderCost.Width = 100;
+            // 
+            // imageListResourcesLarge
+            // 
+            imageListResourcesLarge.ColorDepth = ColorDepth.Depth32Bit;
+            imageListResourcesLarge.ImageStream = (ImageListStreamer)resources.GetObject("imageListResourcesLarge.ImageStream");
+            imageListResourcesLarge.TransparentColor = Color.Transparent;
+            imageListResourcesLarge.Images.SetKeyName(0, "person_l.png");
+            imageListResourcesLarge.Images.SetKeyName(1, "groupOfPersons_l.png");
+            imageListResourcesLarge.Images.SetKeyName(2, "asset_l.png");
+            imageListResourcesLarge.Images.SetKeyName(3, "groupOfAssets_l.png");
+            imageListResourcesLarge.Images.SetKeyName(4, "location_l.png");
+            imageListResourcesLarge.Images.SetKeyName(5, "rental_l.png");
+            // 
+            // imageListResourcesSmall
+            // 
+            imageListResourcesSmall.ColorDepth = ColorDepth.Depth24Bit;
+            imageListResourcesSmall.ImageStream = (ImageListStreamer)resources.GetObject("imageListResourcesSmall.ImageStream");
+            imageListResourcesSmall.TransparentColor = Color.Transparent;
+            imageListResourcesSmall.Images.SetKeyName(0, "person_s.png");
+            imageListResourcesSmall.Images.SetKeyName(1, "groupOfPersons_s.png");
+            imageListResourcesSmall.Images.SetKeyName(2, "asset_s.png");
+            imageListResourcesSmall.Images.SetKeyName(3, "groupOfAssets_s.png");
+            imageListResourcesSmall.Images.SetKeyName(4, "location_s.png");
+            imageListResourcesSmall.Images.SetKeyName(5, "rental_s.png");
+            // 
+            // groupBoxJobResources
+            // 
+            groupBoxJobResources.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
+            groupBoxJobResources.Controls.Add(flowLayoutPanelJobResources);
+            groupBoxJobResources.Location = new Point(0, 2);
+            groupBoxJobResources.Name = "groupBoxJobResources";
+            groupBoxJobResources.Size = new Size(353, 125);
+            groupBoxJobResources.TabIndex = 13;
+            groupBoxJobResources.TabStop = false;
+            groupBoxJobResources.Text = "Current Job Resources";
+            // 
+            // flowLayoutPanelJobResources
+            // 
+            flowLayoutPanelJobResources.Dock = DockStyle.Fill;
+            flowLayoutPanelJobResources.Location = new Point(3, 19);
+            flowLayoutPanelJobResources.Name = "flowLayoutPanelJobResources";
+            flowLayoutPanelJobResources.Size = new Size(347, 103);
+            flowLayoutPanelJobResources.TabIndex = 0;
+            flowLayoutPanelJobResources.ControlAdded += flowLayoutPanelJobResources_ControlsChanged;
+            // 
+            // buttonCollapse
+            // 
+            buttonCollapse.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
+            buttonCollapse.Location = new Point(359, 67);
+            buttonCollapse.Name = "buttonCollapse";
+            buttonCollapse.Size = new Size(15, 50);
+            buttonCollapse.TabIndex = 12;
+            buttonCollapse.Text = ">";
+            buttonCollapse.UseVisualStyleBackColor = true;
+            buttonCollapse.Click += buttonCollapse_Click;
             // 
             // openFileDialogJob
             // 
@@ -381,7 +474,12 @@
             splitContainerMain.Panel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)splitContainerMain).EndInit();
             splitContainerMain.ResumeLayout(false);
-            groupBoxResources.ResumeLayout(false);
+            splitContainerResources.Panel1.ResumeLayout(false);
+            splitContainerResources.Panel2.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)splitContainerResources).EndInit();
+            splitContainerResources.ResumeLayout(false);
+            groupBoxResourcePool.ResumeLayout(false);
+            groupBoxJobResources.ResumeLayout(false);
             ResumeLayout(false);
             PerformLayout();
         }
@@ -406,8 +504,8 @@
         private ToolStripDropDownButton toolStripDropDownMisc;
         private ToolStripMenuItem settingsToolStripMenuItem;
         private ToolStripMenuItem aboutToolStripMenuItem;
-        private GroupBox groupBoxResources;
-        private Button buttonDuplicate;
+        private GroupBox groupBoxResourcePool;
+        private Button buttonEdit;
         private Button buttonRemove;
         private Button buttonAdd;
         private ListView listViewResources;
@@ -417,6 +515,12 @@
         private OpenFileDialog openFileDialogJob;
         private SaveFileDialog saveFileDialogJob;
         private Button buttonExpand;
+        private SplitContainer splitContainerResources;
+        private GroupBox groupBoxJobResources;
+        private FlowLayoutPanel flowLayoutPanelJobResources;
         private Button buttonCollapse;
+        private Button buttonAddToJob;
+        private ImageList imageListResourcesSmall;
+        private ImageList imageListResourcesLarge;
     }
 }
