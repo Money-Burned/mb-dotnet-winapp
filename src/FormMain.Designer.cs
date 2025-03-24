@@ -454,6 +454,7 @@ namespace MoneyBurned.Dotnet.Gui
             MinimumSize = new Size(640, 320);
             Name = "FormMain";
             Text = "Money Burned";
+            FormClosing += FormMain_FormClosing;
             toolStripMain.ResumeLayout(false);
             toolStripMain.PerformLayout();
             splitContainerMain.Panel1.ResumeLayout(false);

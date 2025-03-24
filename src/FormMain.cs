@@ -17,6 +17,7 @@ namespace MoneyBurned.Dotnet.Gui
         public FormMain()
         {
             InitializeComponent();
+            LoadResourcePool(String.Empty);
             currentJob = new Job("A new MB job...");
             DrawJobUi();
             ActiveControl = buttonAdd;
@@ -169,9 +170,21 @@ namespace MoneyBurned.Dotnet.Gui
             openFileDialogJob.ShowDialog();
         }
 
+        private void openFileDialogJob_FileOk(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            if (e.Cancel) return;
+            MessageBox.Show("Feature is not implemented by now...", "Loading job unavailable", MessageBoxButtons.OK, MessageBoxIcon.Information);
+        }
+
         private void saveJobToolStripMenuItem_Click(object sender, EventArgs e)
         {
             saveFileDialogJob.ShowDialog();
+        }
+
+        private void saveFileDialogJob_FileOk(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            if (e.Cancel) return;
+            MessageBox.Show("Feature is not implemented by now...", "Saving job unavailable", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
 
         private void exitToolStripMenuItem_Click(object sender, EventArgs e)
@@ -327,7 +340,6 @@ namespace MoneyBurned.Dotnet.Gui
 
         #endregion
 
-
         #region General Helper
 
         private void LoadResourcePool(string filePath)
@@ -337,17 +349,33 @@ namespace MoneyBurned.Dotnet.Gui
                 if (String.IsNullOrWhiteSpace(filePath))
                 {
                     filePath = defaultResourceFilePath;
+                    if (!File.Exists(filePath)) return;
                 }
-                string resourcePoolItemsAsJson = File.ReadAllText(filePath);
-                List<Resource>? resourcePoolItems = JsonSerializer.Deserialize<List<Resource>>(resourcePoolItemsAsJson);
-                if (resourcePoolItems != null)
+
+                List<Guid> resourcePoolItemIds = [];
+                foreach (ListViewItem resourceItem in listViewResources.Items)
                 {
-                    foreach (Resource resource in resourcePoolItems)
+                    Resource? resourceItemResource = (Resource?)resourceItem.Tag;
+                    if (resourceItemResource != null)
                     {
-                        ListViewItem resourceItem = new ListViewItem(resource.Name);
-                        resourceItem.Tag = resource;
-                        resourceItem.SubItems.Add($"{resource.CostPerWorkHour:C2}");
-                        listViewResources.Items.Add(resourceItem);
+                        resourcePoolItemIds.Add(resourceItemResource.Id);
+                    }
+                }
+
+                string resourcePoolItemsAsJson = File.ReadAllText(filePath);
+                List<Resource>? loadedResourcePoolItems = JsonSerializer.Deserialize<List<Resource>>(resourcePoolItemsAsJson);
+                if (loadedResourcePoolItems != null)
+                {
+                    foreach (Resource resource in loadedResourcePoolItems)
+                    {
+                        if (!resourcePoolItemIds.Contains(resource.Id))
+                        {
+                            ListViewItem resourceItem = new ListViewItem(resource.Name);
+                            resourceItem.ImageIndex = (int)resource.Category;
+                            resourceItem.Tag = resource;
+                            resourceItem.SubItems.Add($"{resource.CostPerWorkHour / resource.Amount:C2}");
+                            listViewResources.Items.Add(resourceItem);
+                        }
                     }
                 }
             }
@@ -384,6 +412,11 @@ namespace MoneyBurned.Dotnet.Gui
                 MessageBox.Show(ex.Message, "Error saving resources", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
 
+        }
+
+        private void FormMain_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            SaveResourcePool(String.Empty);
         }
 
         #endregion
