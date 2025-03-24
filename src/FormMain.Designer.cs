@@ -60,8 +60,7 @@ namespace MoneyBurned.Dotnet.Gui
             listViewResources = new ListView();
             columnHeaderName = new ColumnHeader();
             columnHeaderCost = new ColumnHeader();
-            imageListResourcesLarge = new ImageList(components);
-            imageListResourcesSmall = new ImageList(components);
+            imageListResources = new ImageList(components);
             groupBoxJobResources = new GroupBox();
             flowLayoutPanelJobResources = new FlowLayoutPanel();
             buttonCollapse = new Button();
@@ -369,11 +368,11 @@ namespace MoneyBurned.Dotnet.Gui
             // 
             listViewResources.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
             listViewResources.Columns.AddRange(new ColumnHeader[] { columnHeaderName, columnHeaderCost });
-            listViewResources.LargeImageList = imageListResourcesLarge;
+            listViewResources.LargeImageList = imageListResources;
             listViewResources.Location = new Point(6, 22);
             listViewResources.Name = "listViewResources";
             listViewResources.Size = new Size(287, 108);
-            listViewResources.SmallImageList = imageListResourcesSmall;
+            listViewResources.SmallImageList = imageListResources;
             listViewResources.TabIndex = 15;
             listViewResources.UseCompatibleStateImageBehavior = false;
             listViewResources.View = View.Details;
@@ -392,29 +391,17 @@ namespace MoneyBurned.Dotnet.Gui
             columnHeaderCost.TextAlign = HorizontalAlignment.Right;
             columnHeaderCost.Width = 100;
             // 
-            // imageListResourcesLarge
+            // imageListResources
             // 
-            imageListResourcesLarge.ColorDepth = ColorDepth.Depth32Bit;
-            imageListResourcesLarge.ImageStream = (ImageListStreamer)resources.GetObject("imageListResourcesLarge.ImageStream");
-            imageListResourcesLarge.TransparentColor = Color.Transparent;
-            imageListResourcesLarge.Images.SetKeyName(0, "person_l.png");
-            imageListResourcesLarge.Images.SetKeyName(1, "groupOfPersons_l.png");
-            imageListResourcesLarge.Images.SetKeyName(2, "asset_l.png");
-            imageListResourcesLarge.Images.SetKeyName(3, "groupOfAssets_l.png");
-            imageListResourcesLarge.Images.SetKeyName(4, "location_l.png");
-            imageListResourcesLarge.Images.SetKeyName(5, "rental_l.png");
-            // 
-            // imageListResourcesSmall
-            // 
-            imageListResourcesSmall.ColorDepth = ColorDepth.Depth24Bit;
-            imageListResourcesSmall.ImageStream = (ImageListStreamer)resources.GetObject("imageListResourcesSmall.ImageStream");
-            imageListResourcesSmall.TransparentColor = Color.Transparent;
-            imageListResourcesSmall.Images.SetKeyName(0, "person_s.png");
-            imageListResourcesSmall.Images.SetKeyName(1, "groupOfPersons_s.png");
-            imageListResourcesSmall.Images.SetKeyName(2, "asset_s.png");
-            imageListResourcesSmall.Images.SetKeyName(3, "groupOfAssets_s.png");
-            imageListResourcesSmall.Images.SetKeyName(4, "location_s.png");
-            imageListResourcesSmall.Images.SetKeyName(5, "rental_s.png");
+            imageListResources.ColorDepth = ColorDepth.Depth24Bit;
+            imageListResources.ImageStream = (ImageListStreamer)resources.GetObject("imageListResources.ImageStream");
+            imageListResources.TransparentColor = Color.Transparent;
+            imageListResources.Images.SetKeyName(0, "person.ico");
+            imageListResources.Images.SetKeyName(1, "groupOfPersons.ico");
+            imageListResources.Images.SetKeyName(2, "asset.ico");
+            imageListResources.Images.SetKeyName(3, "groupOfAssets.ico");
+            imageListResources.Images.SetKeyName(4, "location.ico");
+            imageListResources.Images.SetKeyName(5, "rental.ico");
             // 
             // groupBoxJobResources
             // 
@@ -520,7 +507,6 @@ namespace MoneyBurned.Dotnet.Gui
         private FlowLayoutPanel flowLayoutPanelJobResources;
         private Button buttonCollapse;
         private Button buttonAddToJob;
-        private ImageList imageListResourcesSmall;
-        private ImageList imageListResourcesLarge;
+        private ImageList imageListResources;
     }
 }
