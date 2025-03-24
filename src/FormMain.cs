@@ -205,6 +205,8 @@ namespace MoneyBurned.Dotnet.Gui
         {
             if (resource != null)
             {
+                resource.Amount = resource.Amount == 0 ? resource.Amount = 1 : resource.Amount = resource.Amount;
+
                 foreach (UserControlResourceInstance resourceControl in flowLayoutPanelJobResources.Controls)
                 {
                     if (resourceControl.Resource?.Id == resource.Id)
