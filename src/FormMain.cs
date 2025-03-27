@@ -17,6 +17,7 @@ namespace MoneyBurned.Dotnet.Gui
         public FormMain()
         {
             InitializeComponent();
+            LoadResourcePool(String.Empty);
             currentJob = new Job("A new MB job...");
             DrawJobUi();
             ActiveControl = buttonAdd;
@@ -25,7 +26,7 @@ namespace MoneyBurned.Dotnet.Gui
         #region UI Logic Handler
 
         /// <summary>
-        /// The start button: this is where most of the magic happens: the recording job is put together. We do 
+        /// The start button: this is where most of the magic happens - the job is put together. We do 
         /// this here as all the resources used are required first. Then the timer is set up and launched.
         /// </summary>
         /// <param name="sender">Not relevant here</param>
@@ -59,7 +60,7 @@ namespace MoneyBurned.Dotnet.Gui
         }
 
         /// <summary>
-        /// The only purpos of this event handler is to redraw the UI as long as the stop watch is running.
+        /// The only purpose of this event handler is to redraw the UI as long as the stop watch is running.
         /// </summary>
         /// <param name="sender">Not relevant here</param>
         /// <param name="e">Not relevant here</param>
@@ -160,6 +161,19 @@ namespace MoneyBurned.Dotnet.Gui
             }
         }
 
+        /// <summary>
+        /// Job management: Updates the name of the current job, when changed
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void textBoxJobName_TextChanged(object sender, EventArgs e)
+        {
+            if (currentJob != null && currentJob.Name != textBoxJobName.Text)
+            {
+                currentJob.Name = textBoxJobName.Text;
+            }
+        }
+
         #endregion
 
         #region UI Menu Handler
@@ -169,9 +183,21 @@ namespace MoneyBurned.Dotnet.Gui
             openFileDialogJob.ShowDialog();
         }
 
+        private void openFileDialogJob_FileOk(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            if (e.Cancel) return;
+            MessageBox.Show("Feature is not implemented by now...", "Loading job unavailable", MessageBoxButtons.OK, MessageBoxIcon.Information);
+        }
+
         private void saveJobToolStripMenuItem_Click(object sender, EventArgs e)
         {
             saveFileDialogJob.ShowDialog();
+        }
+
+        private void saveFileDialogJob_FileOk(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            if (e.Cancel) return;
+            MessageBox.Show("Feature is not implemented by now...", "Saving job unavailable", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
 
         private void exitToolStripMenuItem_Click(object sender, EventArgs e)
@@ -233,6 +259,7 @@ namespace MoneyBurned.Dotnet.Gui
         {
             if (resource != null)
             {
+                resource.Amount = 1;
                 ListViewItem resourceItem = new ListViewItem(resource.Name);
                 resourceItem.SubItems.Add($"{resource.CostPerWorkHour:C2}");
                 resourceItem.ImageIndex = (int)resource.Category;
@@ -327,9 +354,12 @@ namespace MoneyBurned.Dotnet.Gui
 
         #endregion
 
-
         #region General Helper
 
+        /// <summary>
+        /// Load resources to resource pool from a JSON file
+        /// </summary>
+        /// <param name="filePath">Path and file name for the JSON file of the resources to be loaded</param>
         private void LoadResourcePool(string filePath)
         {
             try
@@ -337,17 +367,29 @@ namespace MoneyBurned.Dotnet.Gui
                 if (String.IsNullOrWhiteSpace(filePath))
                 {
                     filePath = defaultResourceFilePath;
+                    if (!File.Exists(filePath)) return;
                 }
-                string resourcePoolItemsAsJson = File.ReadAllText(filePath);
-                List<Resource>? resourcePoolItems = JsonSerializer.Deserialize<List<Resource>>(resourcePoolItemsAsJson);
-                if (resourcePoolItems != null)
+
+                List<Guid> resourcePoolItemIds = [];
+                foreach (ListViewItem resourceItem in listViewResources.Items)
                 {
-                    foreach (Resource resource in resourcePoolItems)
+                    Resource? resourceItemResource = (Resource?)resourceItem.Tag;
+                    if (resourceItemResource != null)
                     {
-                        ListViewItem resourceItem = new ListViewItem(resource.Name);
-                        resourceItem.Tag = resource;
-                        resourceItem.SubItems.Add($"{resource.CostPerWorkHour:C2}");
-                        listViewResources.Items.Add(resourceItem);
+                        resourcePoolItemIds.Add(resourceItemResource.Id);
+                    }
+                }
+
+                string resourcePoolItemsAsJson = File.ReadAllText(filePath);
+                List<Resource>? loadedResourcePoolItems = JsonSerializer.Deserialize<List<Resource>>(resourcePoolItemsAsJson);
+                if (loadedResourcePoolItems != null)
+                {
+                    foreach (Resource resource in loadedResourcePoolItems)
+                    {
+                        if (!resourcePoolItemIds.Contains(resource.Id))
+                        {
+                            AddResourceToPool(resource);
+                        }
                     }
                 }
             }
@@ -357,6 +399,10 @@ namespace MoneyBurned.Dotnet.Gui
             }
         }
 
+        /// <summary>
+        /// Save resources from resource pool to a JSON file
+        /// </summary>
+        /// <param name="filePath">Path and file name for the JSON file of the resources to be saved</param>
         private void SaveResourcePool(string filePath)
         {
             try
@@ -372,6 +418,7 @@ namespace MoneyBurned.Dotnet.Gui
                     Resource? resourceItemResource = (Resource?)resourceItem.Tag;
                     if (resourceItemResource != null)
                     {
+                        resourceItemResource.Amount = 1;
                         resourcePoolItems.Add(resourceItemResource);
                     }
                 }
@@ -384,6 +431,16 @@ namespace MoneyBurned.Dotnet.Gui
                 MessageBox.Show(ex.Message, "Error saving resources", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
 
+        }
+
+        /// <summary>
+        /// Event handler to handle everything when the application is terminated
+        /// </summary>
+        /// <param name="sender">Not relevant here</param>
+        /// <param name="e">Not relevant here</param>
+        private void FormMain_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            SaveResourcePool(String.Empty);
         }
 
         #endregion

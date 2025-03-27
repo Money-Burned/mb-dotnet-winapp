@@ -7,7 +7,7 @@ namespace MoneyBurned.Dotnet.Gui
         public int ResourceAmount { get { return Convert.ToInt32(numericUpDownCount.Value); } }
         private EventHandler onResourceChanged;
         public event EventHandler OnResourceChanged { add { onResourceChanged += value; } remove { onResourceChanged -= value; } }
-        private Resource? resource;
+        private readonly Resource? resource;
         public Resource? Resource { get { return resource; } }
 
         public UserControlResourceInstance(Resource? resource)

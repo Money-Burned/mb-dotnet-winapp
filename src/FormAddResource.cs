@@ -25,7 +25,9 @@ namespace MoneyBurned.Dotnet.Gui
             comboBoxUnit.SelectedItem = costIntervalTypeDefault;
             if (resource != null)
             {
+                resource.Amount = 1;
                 this.resource = resource;
+                this.Tag = resource;
                 textBoxName.Text = resource.Name;
                 this.Text = $"Edit {resource}...";
                 textBoxCost.Text = $"{resource.CostPerWorkHour}";
@@ -67,7 +69,9 @@ namespace MoneyBurned.Dotnet.Gui
 
                 if (resource != null)
                 {
-                    resource.UpdateCoreData(textBoxName.Text, new Cost(Convert.ToDecimal(textBoxCost.Text), selectedCostType), checkBoxGeneric.Checked);
+                    resource.Name = textBoxName.Text;
+                    resource.CostPerWorkHour = new Cost(Convert.ToDecimal(textBoxCost.Text), selectedCostType).ValuePerHour;
+                    resource.IsGenericRole = checkBoxGeneric.Checked;
                     resource.Category = selectedCategory;
                 }
                 else
