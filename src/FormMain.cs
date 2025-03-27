@@ -343,6 +343,10 @@ namespace MoneyBurned.Dotnet.Gui
 
         #region General Helper
 
+        /// <summary>
+        /// Load resources to resource pool from a JSON file
+        /// </summary>
+        /// <param name="filePath">Path and file name for the JSON file of the resources to be loaded</param>
         private void LoadResourcePool(string filePath)
         {
             try
@@ -382,6 +386,10 @@ namespace MoneyBurned.Dotnet.Gui
             }
         }
 
+        /// <summary>
+        /// Save resources from resource pool to a JSON file
+        /// </summary>
+        /// <param name="filePath">Path and file name for the JSON file of the resources to be saved</param>
         private void SaveResourcePool(string filePath)
         {
             try
@@ -412,6 +420,11 @@ namespace MoneyBurned.Dotnet.Gui
 
         }
 
+        /// <summary>
+        /// Event handler to handle everything when the application is terminated
+        /// </summary>
+        /// <param name="sender">Not relevant here</param>
+        /// <param name="e">Not relevant here</param>
         private void FormMain_FormClosing(object sender, FormClosingEventArgs e)
         {
             SaveResourcePool(String.Empty);
