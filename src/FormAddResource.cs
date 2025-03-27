@@ -25,7 +25,9 @@ namespace MoneyBurned.Dotnet.Gui
             comboBoxUnit.SelectedItem = costIntervalTypeDefault;
             if (resource != null)
             {
+                resource.Amount = 1;
                 this.resource = resource;
+                this.Tag = resource;
                 textBoxName.Text = resource.Name;
                 this.Text = $"Edit {resource}...";
                 textBoxCost.Text = $"{resource.CostPerWorkHour}";
