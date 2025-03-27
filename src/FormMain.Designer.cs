@@ -102,31 +102,31 @@ namespace MoneyBurned.Dotnet.Gui
             // toolStripSeparator1
             // 
             toolStripSeparator1.Name = "toolStripSeparator1";
-            toolStripSeparator1.Size = new Size(121, 6);
+            toolStripSeparator1.Size = new Size(177, 6);
             // 
             // openJobToolStripMenuItem
             // 
             openJobToolStripMenuItem.Name = "openJobToolStripMenuItem";
-            openJobToolStripMenuItem.Size = new Size(124, 22);
+            openJobToolStripMenuItem.Size = new Size(180, 22);
             openJobToolStripMenuItem.Text = "Open Job";
             openJobToolStripMenuItem.Click += openJobToolStripMenuItem_Click;
             // 
             // saveJobToolStripMenuItem
             // 
             saveJobToolStripMenuItem.Name = "saveJobToolStripMenuItem";
-            saveJobToolStripMenuItem.Size = new Size(124, 22);
+            saveJobToolStripMenuItem.Size = new Size(180, 22);
             saveJobToolStripMenuItem.Text = "Save Job";
             saveJobToolStripMenuItem.Click += saveJobToolStripMenuItem_Click;
             // 
             // toolStripSeparator2
             // 
             toolStripSeparator2.Name = "toolStripSeparator2";
-            toolStripSeparator2.Size = new Size(121, 6);
+            toolStripSeparator2.Size = new Size(177, 6);
             // 
             // exitToolStripMenuItem
             // 
             exitToolStripMenuItem.Name = "exitToolStripMenuItem";
-            exitToolStripMenuItem.Size = new Size(124, 22);
+            exitToolStripMenuItem.Size = new Size(180, 22);
             exitToolStripMenuItem.Text = "Exit";
             exitToolStripMenuItem.Click += exitToolStripMenuItem_Click;
             // 
@@ -144,14 +144,14 @@ namespace MoneyBurned.Dotnet.Gui
             // settingsToolStripMenuItem
             // 
             settingsToolStripMenuItem.Name = "settingsToolStripMenuItem";
-            settingsToolStripMenuItem.Size = new Size(116, 22);
+            settingsToolStripMenuItem.Size = new Size(180, 22);
             settingsToolStripMenuItem.Text = "Settings";
             settingsToolStripMenuItem.Click += settingsToolStripMenuItem_Click;
             // 
             // aboutToolStripMenuItem
             // 
             aboutToolStripMenuItem.Name = "aboutToolStripMenuItem";
-            aboutToolStripMenuItem.Size = new Size(116, 22);
+            aboutToolStripMenuItem.Size = new Size(180, 22);
             aboutToolStripMenuItem.Text = "About";
             aboutToolStripMenuItem.Click += aboutToolStripMenuItem_Click;
             // 
@@ -212,6 +212,7 @@ namespace MoneyBurned.Dotnet.Gui
             textBoxJobName.TabIndex = 4;
             textBoxJobName.Text = "Job Name";
             textBoxJobName.TextAlign = HorizontalAlignment.Center;
+            textBoxJobName.TextChanged += textBoxJobName_TextChanged;
             // 
             // progressBarJobRunning
             // 

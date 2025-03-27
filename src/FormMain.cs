@@ -26,7 +26,7 @@ namespace MoneyBurned.Dotnet.Gui
         #region UI Logic Handler
 
         /// <summary>
-        /// The start button: this is where most of the magic happens: the recording job is put together. We do 
+        /// The start button: this is where most of the magic happens - the job is put together. We do 
         /// this here as all the resources used are required first. Then the timer is set up and launched.
         /// </summary>
         /// <param name="sender">Not relevant here</param>
@@ -60,7 +60,7 @@ namespace MoneyBurned.Dotnet.Gui
         }
 
         /// <summary>
-        /// The only purpos of this event handler is to redraw the UI as long as the stop watch is running.
+        /// The only purpose of this event handler is to redraw the UI as long as the stop watch is running.
         /// </summary>
         /// <param name="sender">Not relevant here</param>
         /// <param name="e">Not relevant here</param>
@@ -158,6 +158,19 @@ namespace MoneyBurned.Dotnet.Gui
                     Resource? resource = (Resource?)item.Tag;
                     AddResourceToJob(resource);
                 }
+            }
+        }
+
+        /// <summary>
+        /// Job management: Updates the name of the current job, when changed
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void textBoxJobName_TextChanged(object sender, EventArgs e)
+        {
+            if (currentJob != null && currentJob.Name != textBoxJobName.Text)
+            {
+                currentJob.Name = textBoxJobName.Text;
             }
         }
 
