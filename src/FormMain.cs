@@ -246,6 +246,7 @@ namespace MoneyBurned.Dotnet.Gui
         {
             if (resource != null)
             {
+                resource.Amount = 1;
                 ListViewItem resourceItem = new ListViewItem(resource.Name);
                 resourceItem.SubItems.Add($"{resource.CostPerWorkHour:C2}");
                 resourceItem.ImageIndex = (int)resource.Category;
@@ -370,12 +371,7 @@ namespace MoneyBurned.Dotnet.Gui
                     {
                         if (!resourcePoolItemIds.Contains(resource.Id))
                         {
-                            resource.Amount = 1;
-                            ListViewItem resourceItem = new ListViewItem(resource.Name);
-                            resourceItem.ImageIndex = (int)resource.Category;
-                            resourceItem.Tag = resource;
-                            resourceItem.SubItems.Add($"{resource.CostPerWorkHour:C2}");
-                            listViewResources.Items.Add(resourceItem);
+                            AddResourceToPool(resource);
                         }
                     }
                 }
