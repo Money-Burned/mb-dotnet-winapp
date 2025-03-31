@@ -58,17 +58,17 @@ If you are interested in using the minimal feature set only, please use the bran
 | MB 01.1 | Yes | Rate is 500ms |
 | MB 01.2 | Yes | |
 | MB 02.1 | Yes | |
-| OF 01.1 | No | |
-| OF 01.2 | No | |
-| OF 02.1 | No | |
-| OF 02.2 | No | |
-| OF 02.3 | No | |
-| OF 02.4 | No | |
+| OF 01.1 | Partially | Internally yes but the user can't use it right now |
+| OF 01.2 | No | Can pause but starting again is not ready right now |
+| OF 02.1 | Partially | In a way with _OF 02.2_ |
+| OF 02.2 | Yes | You can use generic resources that use amounts of the same resource |
+| OF 02.3 | Yes | A few resource categories are pre-defined |
+| OF 02.4 | Yes | Perhaps an explicitly defined status is missing |
 | OF 02.5 | No | |
-| OF 03.1 | No | |
+| OF 03.1 | Yes | |
 | OF 03.2 | No | |
 | OB 01.1 | No | |
-| OB 02.1 | No | |
+| OB 02.1 | Yes | Resources are taken from a pool of resources |
 | OB 03.1 | No | |
 | OB 03.2 | No | |
 
