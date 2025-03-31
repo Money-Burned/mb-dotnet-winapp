@@ -58,7 +58,7 @@ You can recognize it by whether the suffix `-min` is present or absent from the 
 | MB 01.2 | Yes | |
 | MB 02.1 | Yes | |
 
-If you are interested in using the optional/maximum feature set, please use the branches without the `-min` suffix and continue reading the [development approach documentation](https://github.com/Money-Burned/mb-dotnet-lib/blob/main/doc/dev-approach.md#requirements).  
+If you are interested in using the optional/maximum feature set, please use the branches without the `-min` suffix and continue reading the [development approach documentation](https://github.com/Money-Burned/mb-dotnet-winapp/blob/main/doc/dev-approach.md#requirements).  
 
 | ReqID | Implemented? | Remarks (why not; challenges; how?) |
 | :--- | :---: | :--- | 
