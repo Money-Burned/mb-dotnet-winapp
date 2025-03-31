@@ -2,9 +2,12 @@
 
 This repository is one of several reference implementations of the application "Money Burned" to illustrate the use of a particular development technology/platform. To learn more about it, check out the [organization profile](https://github.com/Money-Burned).  
 
-This [.NET](https://dotnet.microsoft.com/en-us/learn/dotnet/what-is-dotnet) (pronounced "Dotnet") based application shows how to implement the [requirements](https://github.com/Money-Burned/.github/blob/main/doc/requirements.md) with a simple graphical user interface for current Microsoft Windows operating systems using the native .NET [frontend framework WinForms](https://en.wikipedia.org/wiki/Windows_Forms).  
+The [.NET](https://dotnet.microsoft.com/en-us/learn/dotnet/what-is-dotnet) (pronounced "Dotnet") based application shows how to implement the minimum set of [requirements](https://github.com/Money-Burned/.github/blob/main/doc/requirements.md) with a simple graphical user interface for current Microsoft Windows operating systems using the native .NET [frontend framework WinForms](https://en.wikipedia.org/wiki/Windows_Forms).  
 
 ![Two windows of the same Windows app at different stages of processing, calculated for four resources](./res/mb-dotnet-winapp.png)  
+---
+
+**A small note:** Your are on the [implementation branch here, which contains the **minimum requirements**](https://github.com/Money-Burned/mb-dotnet-winapp/tree/main-min). For the application to work properly, you must use the `-min` branch in the dependent library project! For more information see the [development approach documentation at section _Requirements_](./doc/dev-approach.md#requirements).  
 
 ## Quick facts
 
@@ -23,8 +26,8 @@ This [.NET](https://dotnet.microsoft.com/en-us/learn/dotnet/what-is-dotnet) (pro
 - [Download](https://git-scm.com/downloads) and install a current version of Git
 - [Download](https://dotnet.microsoft.com/en-us/download) and Install .NET SDK (at least Version 9.0)
 - Create a development folder into which you clone the required repositories
-    - Clone the dependency project [repository "mb-dotnet-lib"](https://github.com/Money-Burned/mb-dotnet-lib)
-    - Clone this [repository](https://github.com/Money-Burned/mb-dotnet-winapp)
+    - Clone the dependency project [repository "mb-dotnet-lib"](https://github.com/Money-Burned/mb-dotnet-lib) and switch to the `main-min` branch
+    - Clone this [repository](https://github.com/Money-Burned/mb-dotnet-winapp) and switch to the `main-min` branch
 
 If you are working under Windows, you can perform all of the above steps with the following [PowerShell](https://learn.microsoft.com/de-de/powershell/scripting/what-is-a-command-shell?view=powershell-7.5) commands to get started:  
 
@@ -33,8 +36,8 @@ winget install Git.Git -e
 winget install Microsoft.DotNet.SDK.9 -e
 md ~\Money-Burned
 cd ~\Money-Burned
-git clone https://github.com/Money-Burned/mb-dotnet-lib.git
-git clone https://github.com/Money-Burned/mb-dotnet-winapp.git
+git clone https://github.com/Money-Burned/mb-dotnet-lib.git -b main-min
+git clone https://github.com/Money-Burned/mb-dotnet-winapp.git -b main-min
 ls
 ```
 
