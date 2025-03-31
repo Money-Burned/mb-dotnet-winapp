@@ -39,7 +39,11 @@ But: some parts are filled in already:
 - What did you do to map the requirements to specific tasks to implement?
 - Did you use user stories or requirements or both?
 - To what extent have you broken it down?
-- What requirements did you end up implementing? 
+- What requirements did you end up implementing?
+
+**A quick word on my idea to differentiate between the completeness of the features:** The project maintains two separately managed branch lines (two each for the main and develop lines). Requirements define a [minimum](https://github.com/Money-Burned/.github/blob/main/doc/requirements.md#minimum-requirements) and an [optional set of requirements](https://github.com/Money-Burned/.github/blob/main/doc/requirements.md#optional-requirements), which this distinction is intended to take into account.  
+You can recognize it by whether the suffix `-min` is present or absent from the two main branch lines (_main_ and _develop_).  
+If you are interested in using the minimal feature set only, please use the branches with the `-min` suffix and continue reading the [development approach documentation](https://github.com/Money-Burned/mb-dotnet-winapp/blob/main-min/doc/dev-approach.md#requirements).  
 
 | ReqID | Implemented? | Remarks (why not; challenges; how?) |
 | :--- | :---: | :--- | 
