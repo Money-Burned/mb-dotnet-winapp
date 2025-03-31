@@ -39,7 +39,11 @@ But: some parts are filled in already:
 - What did you do to map the requirements to specific tasks to implement?
 - Did you use user stories or requirements or both?
 - To what extent have you broken it down?
-- What requirements did you end up implementing? 
+- What requirements did you end up implementing?
+
+**A quick word on my idea to differentiate between the completeness of the features:** The project maintains two separately managed branch lines (two each for the main and develop lines). Requirements define a [minimum](https://github.com/Money-Burned/.github/blob/main/doc/requirements.md#minimum-requirements) and an [optional set of requirements](https://github.com/Money-Burned/.github/blob/main/doc/requirements.md#optional-requirements), which this distinction is intended to take into account.  
+You can recognize it by whether the suffix `-min` is present or absent from the two main branch lines (_main_ and _develop_).  
+If you are interested in using the minimal feature set only, please use the branches with the `-min` suffix and continue reading the [development approach documentation](https://github.com/Money-Burned/mb-dotnet-winapp/blob/main-min/doc/dev-approach.md#requirements).  
 
 | ReqID | Implemented? | Remarks (why not; challenges; how?) |
 | :--- | :---: | :--- | 
@@ -54,17 +58,17 @@ But: some parts are filled in already:
 | MB 01.1 | Yes | Rate is 500ms |
 | MB 01.2 | Yes | |
 | MB 02.1 | Yes | |
-| OF 01.1 | No | |
-| OF 01.2 | No | |
-| OF 02.1 | No | |
-| OF 02.2 | No | |
-| OF 02.3 | No | |
-| OF 02.4 | No | |
+| OF 01.1 | Partially | Internally yes but the user can't use it right now |
+| OF 01.2 | No | Can pause but starting again is not ready right now |
+| OF 02.1 | Partially | In a way with _OF 02.2_ |
+| OF 02.2 | Yes | You can use generic resources that use amounts of the same resource |
+| OF 02.3 | Yes | A few resource categories are pre-defined |
+| OF 02.4 | Yes | Perhaps an explicitly defined status is missing |
 | OF 02.5 | No | |
-| OF 03.1 | No | |
+| OF 03.1 | Yes | |
 | OF 03.2 | No | |
 | OB 01.1 | No | |
-| OB 02.1 | No | |
+| OB 02.1 | Yes | Resources are taken from a pool of resources |
 | OB 03.1 | No | |
 | OB 03.2 | No | |
 

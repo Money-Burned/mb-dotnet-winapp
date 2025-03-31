@@ -2,9 +2,12 @@
 
 This repository is one of several reference implementations of the application "Money Burned" to illustrate the use of a particular development technology/platform. To learn more about it, check out the [organization profile](https://github.com/Money-Burned).  
 
-This [.NET](https://dotnet.microsoft.com/en-us/learn/dotnet/what-is-dotnet) (pronounced "Dotnet") based application shows how to implement the [requirements](https://github.com/Money-Burned/.github/blob/main/doc/requirements.md) with a simple graphical user interface for current Microsoft Windows operating systems using the native .NET [frontend framework WinForms](https://en.wikipedia.org/wiki/Windows_Forms).  
+The [.NET](https://dotnet.microsoft.com/en-us/learn/dotnet/what-is-dotnet) (pronounced "Dotnet") based application shows how to implement the [requirements](https://github.com/Money-Burned/.github/blob/main/doc/requirements.md) with a simple graphical user interface for current Microsoft Windows operating systems using the native .NET [frontend framework WinForms](https://en.wikipedia.org/wiki/Windows_Forms).  
 
 ![Two windows of the same Windows app at different stages of processing, calculated for four resources](./res/mb-dotnet-winapp.png)  
+---
+
+**A small note:** More information about the mysterious branch line ending in `-min` can be found in the [development approach documentation at section _Requirements_](./doc/dev-approach.md#requirements).  
 
 ## Quick facts
 
