@@ -7,7 +7,7 @@ namespace MoneyBurned.Dotnet.Gui
     {
         private Font mbBaseFont = new Font("Segoe UI Black", 26F, FontStyle.Bold, GraphicsUnit.Point);
         private Font mbBigFont = new Font("Segoe UI Black", 42F, FontStyle.Bold, GraphicsUnit.Point);
-        
+
         private System.Windows.Forms.Timer? currentJobTimer;
         private Job? currentJob;
 
@@ -30,7 +30,7 @@ namespace MoneyBurned.Dotnet.Gui
         /// <param name="e">Not relevant here</param>
         private void buttonJobStart_Click(object sender, EventArgs e)
         {
-            if(currentJob != null && currentJob.Resources.Count > 0)
+            if (currentJob != null && currentJob.Resources.Count > 0)
             {
                 if (currentJob.StartTime != DateTime.MinValue)
                 {
@@ -113,7 +113,7 @@ namespace MoneyBurned.Dotnet.Gui
         /// <param name="e">Not relevant here</param>
         private void buttonDuplicate_Click(object sender, EventArgs e)
         {
-            if(listViewResources.SelectedItems.Count == 1)
+            if (listViewResources.SelectedItems.Count == 1)
             {
                 AddResource((Resource?)listViewResources.SelectedItems[0].Tag);
             }
@@ -126,9 +126,9 @@ namespace MoneyBurned.Dotnet.Gui
         /// <param name="e">Not relevant here</param>
         private void buttonRemove_Click(object sender, EventArgs e)
         {
-            if(listViewResources.SelectedItems.Count > 0)
+            if (listViewResources.SelectedItems.Count > 0)
             {
-                foreach(ListViewItem item in listViewResources.SelectedItems)
+                foreach (ListViewItem item in listViewResources.SelectedItems)
                 {
                     RemoveResource(item);
                 }
@@ -162,6 +162,31 @@ namespace MoneyBurned.Dotnet.Gui
         private void aboutToolStripMenuItem_Click(object sender, EventArgs e)
         {
 
+        }
+
+        private void copyResultsToClipboardToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (currentJob != null && currentJob.EndTime != DateTime.MinValue)
+            {
+                string result = $"# {currentJob.Name}\n\n";
+                if (currentJob.Resources.Count > 0)
+                {
+
+                    string resourceAmount = currentJob.Resources.Count == 1 ? "a single resource" : $"{currentJob.Resources.Count} resources";
+                    result += $"With {resourceAmount}:  \n\n";
+                    foreach (Resource resource in currentJob.Resources)
+                    {
+                        result += $" - {resource}\n";
+                    }
+                }
+                else
+                {
+                    result += "Without resources...\n";
+                }
+                result += $"\nTime elapsed: {currentJob.ElapsedTime:hh\\:mm\\:ss}  \n";
+                result += $"**Total costs: {currentJob.ElapsedCost:C2}**  \n";
+                Clipboard.SetText(result);
+            }
         }
 
         #endregion
@@ -206,12 +231,12 @@ namespace MoneyBurned.Dotnet.Gui
 
         private void listViewResources_SelectedIndexChanged(object sender, EventArgs e)
         {
-            if(listViewResources.SelectedItems.Count == 1) 
+            if (listViewResources.SelectedItems.Count == 1)
             {
                 buttonDuplicate.Enabled = true;
                 buttonRemove.Enabled = true;
             }
-            else if(listViewResources.SelectedItems.Count > 0)
+            else if (listViewResources.SelectedItems.Count > 0)
             {
                 buttonDuplicate.Enabled = false;
                 buttonRemove.Enabled = true;
