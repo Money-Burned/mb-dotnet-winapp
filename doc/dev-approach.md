@@ -53,7 +53,7 @@ You can recognize it by whether the suffix `-min` is present or absent from the 
 | MF 03.1 | Yes | |
 | MF 03.2 | Yes | |
 | MF 03.3 | Yes | |
-| MF 03.4 | Partially | Currently by a screenshot? |
+| MF 03.4 | Yes | A brief summary can be copied to the clipboard |
 | MB 01.1 | Yes | Rate is 500ms |
 | MB 01.2 | Yes | |
 | MB 02.1 | Yes | |
