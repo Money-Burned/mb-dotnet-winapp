@@ -32,8 +32,6 @@
             toolStripMain = new ToolStrip();
             toolStripDropDownFile = new ToolStripDropDownButton();
             toolStripSeparator1 = new ToolStripSeparator();
-            openJobToolStripMenuItem = new ToolStripMenuItem();
-            saveJobToolStripMenuItem = new ToolStripMenuItem();
             copyResultsToClipboardToolStripMenuItem = new ToolStripMenuItem();
             toolStripSeparator2 = new ToolStripSeparator();
             exitToolStripMenuItem = new ToolStripMenuItem();
@@ -58,9 +56,9 @@
             listViewResources = new ListView();
             columnHeaderName = new ColumnHeader();
             columnHeaderCost = new ColumnHeader();
-            openFileDialogJob = new OpenFileDialog();
-            saveFileDialogJob = new SaveFileDialog();
+            toolStripStatusLabelDefault = new ToolStripStatusLabel();
             toolStripMain.SuspendLayout();
+            statusStripMain.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)splitContainerMain).BeginInit();
             splitContainerMain.Panel1.SuspendLayout();
             splitContainerMain.Panel2.SuspendLayout();
@@ -81,7 +79,7 @@
             // 
             toolStripDropDownFile.AutoToolTip = false;
             toolStripDropDownFile.DisplayStyle = ToolStripItemDisplayStyle.Text;
-            toolStripDropDownFile.DropDownItems.AddRange(new ToolStripItem[] { toolStripSeparator1, openJobToolStripMenuItem, saveJobToolStripMenuItem, copyResultsToClipboardToolStripMenuItem, toolStripSeparator2, exitToolStripMenuItem });
+            toolStripDropDownFile.DropDownItems.AddRange(new ToolStripItem[] { toolStripSeparator1, copyResultsToClipboardToolStripMenuItem, toolStripSeparator2, exitToolStripMenuItem });
             toolStripDropDownFile.Image = (Image)resources.GetObject("toolStripDropDownFile.Image");
             toolStripDropDownFile.ImageTransparentColor = Color.Magenta;
             toolStripDropDownFile.Name = "toolStripDropDownFile";
@@ -92,20 +90,6 @@
             // 
             toolStripSeparator1.Name = "toolStripSeparator1";
             toolStripSeparator1.Size = new Size(208, 6);
-            // 
-            // openJobToolStripMenuItem
-            // 
-            openJobToolStripMenuItem.Name = "openJobToolStripMenuItem";
-            openJobToolStripMenuItem.Size = new Size(211, 22);
-            openJobToolStripMenuItem.Text = "Open Job";
-            openJobToolStripMenuItem.Click += openJobToolStripMenuItem_Click;
-            // 
-            // saveJobToolStripMenuItem
-            // 
-            saveJobToolStripMenuItem.Name = "saveJobToolStripMenuItem";
-            saveJobToolStripMenuItem.Size = new Size(211, 22);
-            saveJobToolStripMenuItem.Text = "Save Job";
-            saveJobToolStripMenuItem.Click += saveJobToolStripMenuItem_Click;
             // 
             // copyResultsToClipboardToolStripMenuItem
             // 
@@ -139,20 +123,22 @@
             // 
             // settingsToolStripMenuItem
             // 
+            settingsToolStripMenuItem.Enabled = false;
             settingsToolStripMenuItem.Name = "settingsToolStripMenuItem";
-            settingsToolStripMenuItem.Size = new Size(116, 22);
+            settingsToolStripMenuItem.Size = new Size(180, 22);
             settingsToolStripMenuItem.Text = "Settings";
             settingsToolStripMenuItem.Click += settingsToolStripMenuItem_Click;
             // 
             // aboutToolStripMenuItem
             // 
             aboutToolStripMenuItem.Name = "aboutToolStripMenuItem";
-            aboutToolStripMenuItem.Size = new Size(116, 22);
+            aboutToolStripMenuItem.Size = new Size(180, 22);
             aboutToolStripMenuItem.Text = "About";
             aboutToolStripMenuItem.Click += aboutToolStripMenuItem_Click;
             // 
             // statusStripMain
             // 
+            statusStripMain.Items.AddRange(new ToolStripItem[] { toolStripStatusLabelDefault });
             statusStripMain.Location = new Point(0, 299);
             statusStripMain.Name = "statusStripMain";
             statusStripMain.Size = new Size(624, 22);
@@ -363,13 +349,10 @@
             columnHeaderCost.TextAlign = HorizontalAlignment.Right;
             columnHeaderCost.Width = 100;
             // 
-            // openFileDialogJob
+            // toolStripStatusLabelDefault
             // 
-            openFileDialogJob.Title = "Open Job...";
-            // 
-            // saveFileDialogJob
-            // 
-            saveFileDialogJob.Title = "Save Job...";
+            toolStripStatusLabelDefault.Name = "toolStripStatusLabelDefault";
+            toolStripStatusLabelDefault.Size = new Size(0, 17);
             // 
             // FormMain
             // 
@@ -385,6 +368,8 @@
             Text = "Money Burned";
             toolStripMain.ResumeLayout(false);
             toolStripMain.PerformLayout();
+            statusStripMain.ResumeLayout(false);
+            statusStripMain.PerformLayout();
             splitContainerMain.Panel1.ResumeLayout(false);
             splitContainerMain.Panel1.PerformLayout();
             splitContainerMain.Panel2.ResumeLayout(false);
@@ -408,8 +393,6 @@
         private ProgressBar progressBarJobRunning;
         private ToolStripDropDownButton toolStripDropDownFile;
         private ToolStripSeparator toolStripSeparator1;
-        private ToolStripMenuItem openJobToolStripMenuItem;
-        private ToolStripMenuItem saveJobToolStripMenuItem;
         private ToolStripSeparator toolStripSeparator2;
         private ToolStripMenuItem exitToolStripMenuItem;
         private ToolStripDropDownButton toolStripDropDownMisc;
@@ -423,10 +406,9 @@
         private TextBox textBoxJobName;
         private ColumnHeader columnHeaderName;
         private ColumnHeader columnHeaderCost;
-        private OpenFileDialog openFileDialogJob;
-        private SaveFileDialog saveFileDialogJob;
         private Button buttonExpand;
         private Button buttonCollapse;
         private ToolStripMenuItem copyResultsToClipboardToolStripMenuItem;
+        private ToolStripStatusLabel toolStripStatusLabelDefault;
     }
 }

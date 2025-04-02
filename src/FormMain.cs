@@ -18,6 +18,7 @@ namespace MoneyBurned.Dotnet.Gui
             currentJob = new Job("A new MB job...");
             DrawJobUi();
             ActiveControl = buttonAdd;
+            toolStripStatusLabelDefault.Text = "Welcome... please add resources to start the job!";
         }
 
         #region UI Logic Handler
@@ -48,10 +49,12 @@ namespace MoneyBurned.Dotnet.Gui
                 currentJobTimer.Interval = 500;
                 currentJobTimer.Tick += currentJobTimer_Tick;
                 currentJobTimer.Start();
+                toolStripStatusLabelDefault.Text = "Job started...";
             }
             else
             {
                 MessageBox.Show("The job wasn't initialized or there are no resources defined!", "Wait! Job not ready...", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                toolStripStatusLabelDefault.Text = "No resources assigned to the job...";
             }
         }
 
@@ -80,6 +83,7 @@ namespace MoneyBurned.Dotnet.Gui
             progressBarJobRunning.Style = ProgressBarStyle.Blocks;
             buttonJobStop.Enabled = false;
             buttonJobStart.Enabled = true;
+            toolStripStatusLabelDefault.Text = "Job stopped...";
         }
 
         /// <summary>
@@ -104,6 +108,7 @@ namespace MoneyBurned.Dotnet.Gui
             FormAddResource? addResourceForm = sender as FormAddResource;
             Resource? resource = addResourceForm?.Tag as Resource;
             AddResource(resource);
+            toolStripStatusLabelDefault.Text = "Resource added...";
         }
 
         /// <summary>
@@ -131,6 +136,7 @@ namespace MoneyBurned.Dotnet.Gui
                 foreach (ListViewItem item in listViewResources.SelectedItems)
                 {
                     RemoveResource(item);
+                    toolStripStatusLabelDefault.Text = "Resource removed...";
                 }
             }
         }
@@ -139,16 +145,6 @@ namespace MoneyBurned.Dotnet.Gui
 
         #region UI Menu Handler
 
-        private void openJobToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            openFileDialogJob.ShowDialog();
-        }
-
-        private void saveJobToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            saveFileDialogJob.ShowDialog();
-        }
-
         private void exitToolStripMenuItem_Click(object sender, EventArgs e)
         {
             Application.Exit();
@@ -156,12 +152,13 @@ namespace MoneyBurned.Dotnet.Gui
 
         private void settingsToolStripMenuItem_Click(object sender, EventArgs e)
         {
-
+            MessageBox.Show("Feature not implemented.", "Settings...", MessageBoxButtons.OK, MessageBoxIcon.Asterisk);
         }
 
         private void aboutToolStripMenuItem_Click(object sender, EventArgs e)
         {
-
+            string mbAboutText = "This application is one of several reference implementations of the application \"Money Burned\" to illustrate the use of the .NET development technology/platform.\n\nTo learn more about it, please visit\nhttps://github.com/Money-Burned";
+            MessageBox.Show(mbAboutText, "Money Burned - mb-dotnet-winapp", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
 
         private void copyResultsToClipboardToolStripMenuItem_Click(object sender, EventArgs e)
@@ -186,6 +183,8 @@ namespace MoneyBurned.Dotnet.Gui
                 result += $"\nTime elapsed: {currentJob.ElapsedTime:hh\\:mm\\:ss}  \n";
                 result += $"**Total costs: {currentJob.ElapsedCost:C2}**  \n";
                 Clipboard.SetText(result);
+
+                toolStripStatusLabelDefault.Text = "Results copied to clipboard...";
             }
         }
 
