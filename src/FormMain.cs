@@ -7,7 +7,7 @@ namespace MoneyBurned.Dotnet.Gui
     {
         private Font mbBaseFont = new Font("Segoe UI Black", 26F, FontStyle.Bold, GraphicsUnit.Point);
         private Font mbBigFont = new Font("Segoe UI Black", 42F, FontStyle.Bold, GraphicsUnit.Point);
-        
+
         private System.Windows.Forms.Timer? currentJobTimer;
         private Job? currentJob;
 
@@ -18,6 +18,7 @@ namespace MoneyBurned.Dotnet.Gui
             currentJob = new Job("A new MB job...");
             DrawJobUi();
             ActiveControl = buttonAdd;
+            toolStripStatusLabelDefault.Text = "Welcome... please add resources to start the job!";
         }
 
         #region UI Logic Handler
@@ -30,7 +31,7 @@ namespace MoneyBurned.Dotnet.Gui
         /// <param name="e">Not relevant here</param>
         private void buttonJobStart_Click(object sender, EventArgs e)
         {
-            if(currentJob != null && currentJob.Resources.Count > 0)
+            if (currentJob != null && currentJob.Resources.Count > 0)
             {
                 if (currentJob.StartTime != DateTime.MinValue)
                 {
@@ -48,10 +49,12 @@ namespace MoneyBurned.Dotnet.Gui
                 currentJobTimer.Interval = 500;
                 currentJobTimer.Tick += currentJobTimer_Tick;
                 currentJobTimer.Start();
+                toolStripStatusLabelDefault.Text = "Job started...";
             }
             else
             {
                 MessageBox.Show("The job wasn't initialized or there are no resources defined!", "Wait! Job not ready...", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                toolStripStatusLabelDefault.Text = "No resources assigned to the job...";
             }
         }
 
@@ -80,6 +83,7 @@ namespace MoneyBurned.Dotnet.Gui
             progressBarJobRunning.Style = ProgressBarStyle.Blocks;
             buttonJobStop.Enabled = false;
             buttonJobStart.Enabled = true;
+            toolStripStatusLabelDefault.Text = "Job stopped...";
         }
 
         /// <summary>
@@ -104,6 +108,7 @@ namespace MoneyBurned.Dotnet.Gui
             FormAddResource? addResourceForm = sender as FormAddResource;
             Resource? resource = addResourceForm?.Tag as Resource;
             AddResource(resource);
+            toolStripStatusLabelDefault.Text = "Resource added...";
         }
 
         /// <summary>
@@ -113,7 +118,7 @@ namespace MoneyBurned.Dotnet.Gui
         /// <param name="e">Not relevant here</param>
         private void buttonDuplicate_Click(object sender, EventArgs e)
         {
-            if(listViewResources.SelectedItems.Count == 1)
+            if (listViewResources.SelectedItems.Count == 1)
             {
                 AddResource((Resource?)listViewResources.SelectedItems[0].Tag);
             }
@@ -126,11 +131,12 @@ namespace MoneyBurned.Dotnet.Gui
         /// <param name="e">Not relevant here</param>
         private void buttonRemove_Click(object sender, EventArgs e)
         {
-            if(listViewResources.SelectedItems.Count > 0)
+            if (listViewResources.SelectedItems.Count > 0)
             {
-                foreach(ListViewItem item in listViewResources.SelectedItems)
+                foreach (ListViewItem item in listViewResources.SelectedItems)
                 {
                     RemoveResource(item);
+                    toolStripStatusLabelDefault.Text = "Resource removed...";
                 }
             }
         }
@@ -139,16 +145,6 @@ namespace MoneyBurned.Dotnet.Gui
 
         #region UI Menu Handler
 
-        private void openJobToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            openFileDialogJob.ShowDialog();
-        }
-
-        private void saveJobToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            saveFileDialogJob.ShowDialog();
-        }
-
         private void exitToolStripMenuItem_Click(object sender, EventArgs e)
         {
             Application.Exit();
@@ -156,12 +152,40 @@ namespace MoneyBurned.Dotnet.Gui
 
         private void settingsToolStripMenuItem_Click(object sender, EventArgs e)
         {
-
+            MessageBox.Show("Feature not implemented.", "Settings...", MessageBoxButtons.OK, MessageBoxIcon.Asterisk);
         }
 
         private void aboutToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            string mbAboutText = "This application is one of several reference implementations of the application \"Money Burned\" to illustrate the use of the .NET development technology/platform.\n\nTo learn more about it, please visit\nhttps://github.com/Money-Burned";
+            MessageBox.Show(mbAboutText, "Money Burned - mb-dotnet-winapp", MessageBoxButtons.OK, MessageBoxIcon.Information);
+        }
 
+        private void copyResultsToClipboardToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (currentJob != null && currentJob.EndTime != DateTime.MinValue)
+            {
+                string result = $"# {currentJob.Name}\n\n";
+                if (currentJob.Resources.Count > 0)
+                {
+
+                    string resourceAmount = currentJob.Resources.Count == 1 ? "a single resource" : $"{currentJob.Resources.Count} resources";
+                    result += $"With {resourceAmount}:  \n\n";
+                    foreach (Resource resource in currentJob.Resources)
+                    {
+                        result += $" - {resource}\n";
+                    }
+                }
+                else
+                {
+                    result += "Without resources...\n";
+                }
+                result += $"\nTime elapsed: {currentJob.ElapsedTime:hh\\:mm\\:ss}  \n";
+                result += $"**Total costs: {currentJob.ElapsedCost:C2}**  \n";
+                Clipboard.SetText(result);
+
+                toolStripStatusLabelDefault.Text = "Results copied to clipboard...";
+            }
         }
 
         #endregion
@@ -206,12 +230,12 @@ namespace MoneyBurned.Dotnet.Gui
 
         private void listViewResources_SelectedIndexChanged(object sender, EventArgs e)
         {
-            if(listViewResources.SelectedItems.Count == 1) 
+            if (listViewResources.SelectedItems.Count == 1)
             {
                 buttonDuplicate.Enabled = true;
                 buttonRemove.Enabled = true;
             }
-            else if(listViewResources.SelectedItems.Count > 0)
+            else if (listViewResources.SelectedItems.Count > 0)
             {
                 buttonDuplicate.Enabled = false;
                 buttonRemove.Enabled = true;

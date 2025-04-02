@@ -32,8 +32,7 @@
             toolStripMain = new ToolStrip();
             toolStripDropDownFile = new ToolStripDropDownButton();
             toolStripSeparator1 = new ToolStripSeparator();
-            openJobToolStripMenuItem = new ToolStripMenuItem();
-            saveJobToolStripMenuItem = new ToolStripMenuItem();
+            copyResultsToClipboardToolStripMenuItem = new ToolStripMenuItem();
             toolStripSeparator2 = new ToolStripSeparator();
             exitToolStripMenuItem = new ToolStripMenuItem();
             toolStripDropDownMisc = new ToolStripDropDownButton();
@@ -41,25 +40,25 @@
             aboutToolStripMenuItem = new ToolStripMenuItem();
             statusStripMain = new StatusStrip();
             splitContainerMain = new SplitContainer();
+            buttonExpand = new Button();
             textBoxJobName = new TextBox();
             progressBarJobRunning = new ProgressBar();
             buttonJobStop = new Button();
             buttonJobStart = new Button();
-            buttonExpand = new Button();
-            buttonAdd = new Button();
-            buttonDuplicate = new Button();
-            buttonRemove = new Button();
-            buttonCollapse = new Button();
             labelJobDetails = new Label();
             labelJobTimeElapsed = new Label();
             labelJobMoneyBurned = new Label();
             groupBoxResources = new GroupBox();
+            buttonCollapse = new Button();
+            buttonDuplicate = new Button();
+            buttonRemove = new Button();
+            buttonAdd = new Button();
             listViewResources = new ListView();
             columnHeaderName = new ColumnHeader();
             columnHeaderCost = new ColumnHeader();
-            openFileDialogJob = new OpenFileDialog();
-            saveFileDialogJob = new SaveFileDialog();
+            toolStripStatusLabelDefault = new ToolStripStatusLabel();
             toolStripMain.SuspendLayout();
+            statusStripMain.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)splitContainerMain).BeginInit();
             splitContainerMain.Panel1.SuspendLayout();
             splitContainerMain.Panel2.SuspendLayout();
@@ -80,7 +79,7 @@
             // 
             toolStripDropDownFile.AutoToolTip = false;
             toolStripDropDownFile.DisplayStyle = ToolStripItemDisplayStyle.Text;
-            toolStripDropDownFile.DropDownItems.AddRange(new ToolStripItem[] { toolStripSeparator1, openJobToolStripMenuItem, saveJobToolStripMenuItem, toolStripSeparator2, exitToolStripMenuItem });
+            toolStripDropDownFile.DropDownItems.AddRange(new ToolStripItem[] { toolStripSeparator1, copyResultsToClipboardToolStripMenuItem, toolStripSeparator2, exitToolStripMenuItem });
             toolStripDropDownFile.Image = (Image)resources.GetObject("toolStripDropDownFile.Image");
             toolStripDropDownFile.ImageTransparentColor = Color.Magenta;
             toolStripDropDownFile.Name = "toolStripDropDownFile";
@@ -90,31 +89,24 @@
             // toolStripSeparator1
             // 
             toolStripSeparator1.Name = "toolStripSeparator1";
-            toolStripSeparator1.Size = new Size(121, 6);
+            toolStripSeparator1.Size = new Size(208, 6);
             // 
-            // openJobToolStripMenuItem
+            // copyResultsToClipboardToolStripMenuItem
             // 
-            openJobToolStripMenuItem.Name = "openJobToolStripMenuItem";
-            openJobToolStripMenuItem.Size = new Size(124, 22);
-            openJobToolStripMenuItem.Text = "Open Job";
-            openJobToolStripMenuItem.Click += openJobToolStripMenuItem_Click;
-            // 
-            // saveJobToolStripMenuItem
-            // 
-            saveJobToolStripMenuItem.Name = "saveJobToolStripMenuItem";
-            saveJobToolStripMenuItem.Size = new Size(124, 22);
-            saveJobToolStripMenuItem.Text = "Save Job";
-            saveJobToolStripMenuItem.Click += saveJobToolStripMenuItem_Click;
+            copyResultsToClipboardToolStripMenuItem.Name = "copyResultsToClipboardToolStripMenuItem";
+            copyResultsToClipboardToolStripMenuItem.Size = new Size(211, 22);
+            copyResultsToClipboardToolStripMenuItem.Text = "Copy Results to Clipboard";
+            copyResultsToClipboardToolStripMenuItem.Click += copyResultsToClipboardToolStripMenuItem_Click;
             // 
             // toolStripSeparator2
             // 
             toolStripSeparator2.Name = "toolStripSeparator2";
-            toolStripSeparator2.Size = new Size(121, 6);
+            toolStripSeparator2.Size = new Size(208, 6);
             // 
             // exitToolStripMenuItem
             // 
             exitToolStripMenuItem.Name = "exitToolStripMenuItem";
-            exitToolStripMenuItem.Size = new Size(124, 22);
+            exitToolStripMenuItem.Size = new Size(211, 22);
             exitToolStripMenuItem.Text = "Exit";
             exitToolStripMenuItem.Click += exitToolStripMenuItem_Click;
             // 
@@ -131,20 +123,22 @@
             // 
             // settingsToolStripMenuItem
             // 
+            settingsToolStripMenuItem.Enabled = false;
             settingsToolStripMenuItem.Name = "settingsToolStripMenuItem";
-            settingsToolStripMenuItem.Size = new Size(116, 22);
+            settingsToolStripMenuItem.Size = new Size(180, 22);
             settingsToolStripMenuItem.Text = "Settings";
             settingsToolStripMenuItem.Click += settingsToolStripMenuItem_Click;
             // 
             // aboutToolStripMenuItem
             // 
             aboutToolStripMenuItem.Name = "aboutToolStripMenuItem";
-            aboutToolStripMenuItem.Size = new Size(116, 22);
+            aboutToolStripMenuItem.Size = new Size(180, 22);
             aboutToolStripMenuItem.Text = "About";
             aboutToolStripMenuItem.Click += aboutToolStripMenuItem_Click;
             // 
             // statusStripMain
             // 
+            statusStripMain.Items.AddRange(new ToolStripItem[] { toolStripStatusLabelDefault });
             statusStripMain.Location = new Point(0, 299);
             statusStripMain.Name = "statusStripMain";
             statusStripMain.Size = new Size(624, 22);
@@ -193,7 +187,7 @@
             textBoxJobName.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
             textBoxJobName.BackColor = SystemColors.Control;
             textBoxJobName.BorderStyle = BorderStyle.None;
-            textBoxJobName.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point);
+            textBoxJobName.Font = new Font("Segoe UI", 12F, FontStyle.Bold);
             textBoxJobName.Location = new Point(12, 10);
             textBoxJobName.Name = "textBoxJobName";
             textBoxJobName.Size = new Size(212, 22);
@@ -236,7 +230,7 @@
             // labelJobDetails
             // 
             labelJobDetails.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
-            labelJobDetails.Font = new Font("Segoe UI", 9.5F, FontStyle.Regular, GraphicsUnit.Point);
+            labelJobDetails.Font = new Font("Segoe UI", 9.5F);
             labelJobDetails.ForeColor = SystemColors.InfoText;
             labelJobDetails.Location = new Point(12, 35);
             labelJobDetails.Name = "labelJobDetails";
@@ -244,11 +238,12 @@
             labelJobDetails.TabIndex = 8;
             labelJobDetails.Text = "<Details>";
             labelJobDetails.TextAlign = ContentAlignment.MiddleCenter;
+            labelJobDetails.DoubleClick += copyResultsToClipboardToolStripMenuItem_Click;
             // 
             // labelJobTimeElapsed
             // 
             labelJobTimeElapsed.Anchor = AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
-            labelJobTimeElapsed.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point);
+            labelJobTimeElapsed.Font = new Font("Segoe UI", 12F);
             labelJobTimeElapsed.Location = new Point(12, 154);
             labelJobTimeElapsed.Name = "labelJobTimeElapsed";
             labelJobTimeElapsed.Size = new Size(212, 29);
@@ -260,7 +255,7 @@
             // 
             labelJobMoneyBurned.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
             labelJobMoneyBurned.AutoEllipsis = true;
-            labelJobMoneyBurned.Font = new Font("Segoe UI Black", 28F, FontStyle.Bold, GraphicsUnit.Point);
+            labelJobMoneyBurned.Font = new Font("Segoe UI Black", 28F, FontStyle.Bold);
             labelJobMoneyBurned.Location = new Point(12, 84);
             labelJobMoneyBurned.Name = "labelJobMoneyBurned";
             labelJobMoneyBurned.Size = new Size(212, 70);
@@ -354,13 +349,10 @@
             columnHeaderCost.TextAlign = HorizontalAlignment.Right;
             columnHeaderCost.Width = 100;
             // 
-            // openFileDialogJob
+            // toolStripStatusLabelDefault
             // 
-            openFileDialogJob.Title = "Open Job...";
-            // 
-            // saveFileDialogJob
-            // 
-            saveFileDialogJob.Title = "Save Job...";
+            toolStripStatusLabelDefault.Name = "toolStripStatusLabelDefault";
+            toolStripStatusLabelDefault.Size = new Size(0, 17);
             // 
             // FormMain
             // 
@@ -376,6 +368,8 @@
             Text = "Money Burned";
             toolStripMain.ResumeLayout(false);
             toolStripMain.PerformLayout();
+            statusStripMain.ResumeLayout(false);
+            statusStripMain.PerformLayout();
             splitContainerMain.Panel1.ResumeLayout(false);
             splitContainerMain.Panel1.PerformLayout();
             splitContainerMain.Panel2.ResumeLayout(false);
@@ -399,8 +393,6 @@
         private ProgressBar progressBarJobRunning;
         private ToolStripDropDownButton toolStripDropDownFile;
         private ToolStripSeparator toolStripSeparator1;
-        private ToolStripMenuItem openJobToolStripMenuItem;
-        private ToolStripMenuItem saveJobToolStripMenuItem;
         private ToolStripSeparator toolStripSeparator2;
         private ToolStripMenuItem exitToolStripMenuItem;
         private ToolStripDropDownButton toolStripDropDownMisc;
@@ -414,9 +406,9 @@
         private TextBox textBoxJobName;
         private ColumnHeader columnHeaderName;
         private ColumnHeader columnHeaderCost;
-        private OpenFileDialog openFileDialogJob;
-        private SaveFileDialog saveFileDialogJob;
         private Button buttonExpand;
         private Button buttonCollapse;
+        private ToolStripMenuItem copyResultsToClipboardToolStripMenuItem;
+        private ToolStripStatusLabel toolStripStatusLabelDefault;
     }
 }
